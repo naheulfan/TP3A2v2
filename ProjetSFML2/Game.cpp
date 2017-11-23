@@ -42,6 +42,8 @@ bool Game::init()
 	background[0].setPosition(0, 0);
 	background[1].setTexture(backgroundT);
 	background[1].setPosition(2560, 0);
+	playerTexture.loadFromFile("Ressources\\Spaceship.png");
+	player.Init(playerTexture);
 	return true;
 }
 
@@ -54,6 +56,14 @@ void Game::getInputs()
 		if (event.type == Event::Closed)
 		{
 			mainWin.close();
+		}
+		if (event.type == Event::KeyPressed)
+		{
+			Vector2f position = player.GetPosition();
+			if (Keyboard::isKeyPressed(Keyboard::Key::W))
+			{
+				player.SetPosition(Vector2f(position.x, position.y - 8));
+			}
 		}
 	}
 }
@@ -83,5 +93,6 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
+	player.Draw(mainWin);
 	mainWin.display();
 }

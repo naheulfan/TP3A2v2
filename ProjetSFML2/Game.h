@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Game.h"
+#include "Player.h"
 
 using namespace sf;
 
@@ -26,4 +27,6 @@ private:
 	Event event;
 	Texture backgroundT;
 	Sprite background[2];
+	Texture playerTexture;
+	Player player = Player(Vector2f(0, HAUTEUR / 2));
 };

@@ -5,11 +5,15 @@ class Player
 {
 public:
 	Player();
+	Player(Vector2f basePos);
 	~Player();
-	void Init(Texture playerTexture);
+	void Init(Texture &playerTexture);
 	void Update();
-	void Draw();
+	void Draw(RenderWindow &window);
+	void SetPosition(Vector2f newpos);
+	Vector2f GetPosition();
 private:
 	Vector2f position;
+	Sprite sprite;
 };
 
