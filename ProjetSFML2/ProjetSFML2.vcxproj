@@ -94,6 +94,7 @@
     <ClCompile Include="Testeur.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
