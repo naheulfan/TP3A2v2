@@ -84,4 +84,5 @@ void Game::draw()
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
 	mainWin.display();
+	//haha test
 }
