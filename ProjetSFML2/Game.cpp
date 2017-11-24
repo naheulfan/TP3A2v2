@@ -4,18 +4,13 @@ Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
 
-	mainWin.create(VideoMode(LARGEUR, HAUTEUR, 32), "Le titre de mon jeu");  // , Style::Titlebar); / , Style::FullScreen);
+	mainWin.create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
 	view = mainWin.getDefaultView();
 
 	//Synchonisation coordonnée à l'écran!  Normalement 60 frames par secondes. À faire absolument
 	mainWin.setVerticalSyncEnabled(true);
 	//mainWin.setFramerateLimit(60);  //Équivalent... normalement, mais pas toujours. À utiliser si la synchonisation de l'écran fonctionne mal.
 	//https://www.sfml-dev.org/tutorials/2.0/window-window.php#controlling-the-framerate
-}
-
-int Game::testTest()
-{
-	return 0;
 }
 
 int Game::run()
@@ -37,13 +32,21 @@ int Game::run()
 
 bool Game::init()
 {
-	backgroundT.loadFromFile("Ressources\\starfieldSprite.png");
+	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"));
+	{
+		return false;
+	}
 	background[0].setTexture(backgroundT);
 	background[0].setPosition(0, 0);
 	background[1].setTexture(backgroundT);
 	background[1].setPosition(2560, 0);
-	playerTexture.loadFromFile("Ressources\\Spaceship.png");
+
+	if(!playerTexture.loadFromFile("Ressources\\Spaceship.png"));
+	{
+		return false;
+	}
 	player.Init(playerTexture);
+
 	return true;
 }
 

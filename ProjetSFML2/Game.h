@@ -11,11 +11,10 @@ class Game
 public:
 	Game();
 	int run();
-	int testTest();
 
 private:
-	const int LARGEUR = 1280;
-	const int HAUTEUR = 720;
+	const int LARGEUR_ECRAN = 1280;
+	const int HAUTEUR_ECRAN = 720;
 
 	bool init();
 	void getInputs();
@@ -28,5 +27,5 @@ private:
 	Texture backgroundT;
 	Sprite background[2];
 	Texture playerTexture;
-	Player player = Player(Vector2f(0, HAUTEUR / 2));
+	Player player = Player(Vector2f(0, HAUTEUR_ECRAN / 2));
 };
