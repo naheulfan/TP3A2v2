@@ -109,5 +109,4 @@ void Game::draw()
 	mainWin.draw(background[1]);
 	player.Draw(mainWin);
 	mainWin.display();
-	//haha test
 }
