@@ -5,28 +5,40 @@
 Player::Player()
 {
 }
-Player::Player(Vector2f basePos)
-{
-	position = basePos;
-}
-void Player::Init(Texture &playerTexture)
+void Player::Init(Texture &playerTexture, Vector2f basePos)
 {
 	sprite.setTexture(playerTexture);
-	sprite.setPosition(position);
+	sprite.setPosition(basePos);
 }
 Player::~Player()
 {
 }
 void Player::Draw(RenderWindow &window)
 {
-	sprite.setPosition(position);
 	window.draw(sprite);
 }
-void Player::SetPosition(Vector2f newpos)
+void Player::Move(int command, int axis)
 {
-	position = newpos;
-}
-Vector2f Player::GetPosition()
-{
-	return position;
+	if (axis == 2)
+	{
+		if (command == 2)
+		{
+			sprite.move(0, -speed);
+		}
+		if (command == 1)
+		{
+			sprite.move(0, speed);
+		}
+	}
+	if (axis == 1)
+	{
+		if (command == 3)
+		{
+			sprite.move(speed, 0);
+		}
+		if (command == 4)
+		{
+			sprite.move(-speed, 0);
+		}
+	}
 }

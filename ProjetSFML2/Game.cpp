@@ -45,7 +45,7 @@ bool Game::init()
 	{
 		return false;
 	}
-	player.Init(playerTexture);
+	player.Init(playerTexture, Vector2f(0, HAUTEUR / 2));
 
 	return true;
 }
@@ -60,13 +60,27 @@ void Game::getInputs()
 		{
 			mainWin.close();
 		}
+		interfaceCommande = 0;
 		if (event.type == Event::KeyPressed)
 		{
-			Vector2f position = player.GetPosition();
-			if (Keyboard::isKeyPressed(Keyboard::Key::W))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				player.SetPosition(Vector2f(position.x, position.y - 8));
+				interfaceCommande = 4;
 			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				interfaceCommande = 3;
+			}
+			player.Move(interfaceCommande, 1);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			{
+				interfaceCommande = 2;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				interfaceCommande = 1;
+			}
+			player.Move(interfaceCommande, 2);
 		}
 	}
 }
