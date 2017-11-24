@@ -1,19 +1,18 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 using namespace sf;
-class Player
+class Player : public Sprite
 {
 public:
 	Player();
 	Player(Vector2f basePos);
 	~Player();
-	void Init(Texture &playerTexture);
+	void Init(Texture &playerTexture, Vector2f basePos);
 	void Update();
 	void Draw(RenderWindow &window);
-	void SetPosition(Vector2f newpos);
-	Vector2f GetPosition();
+	void Move(int command, int axis);
 private:
-	Vector2f position;
 	Sprite sprite;
+	const float speed = 10;
 };
 

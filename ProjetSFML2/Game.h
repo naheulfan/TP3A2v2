@@ -28,5 +28,6 @@ private:
 	Texture backgroundT;
 	Sprite background[2];
 	Texture playerTexture;
-	Player player = Player(Vector2f(0, HAUTEUR / 2));
+	Player player;
+	int interfaceCommande;
 };
