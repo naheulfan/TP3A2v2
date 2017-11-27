@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseEnemy.h"
+#include "Fabrique.h"
 #include "Mothership.h"
 #include <SFML/Graphics.hpp>
 #include "Game.h"
@@ -17,17 +17,19 @@ private:
 	const int LARGEUR_ECRAN = 1280;
 	const int HAUTEUR_ECRAN = 720;
 
-	bool init();
+	bool init(RenderWindow * const window);
 	void getInputs();
 	void update();
 	void draw();
 
-	RenderWindow mainWin;
+	CircleShape spawner;
+	int spawnNumber;
+
+	RenderWindow* mainWin;
 	View view;
 	Event event;
 	Texture backgroundT;
-	Texture enemyTexture;
-	Texture enemyTexture2;
+	Texture texturesEnnemis[5];
 	Sprite background[2];
 	Texture playerTexture;
 	Player player;
