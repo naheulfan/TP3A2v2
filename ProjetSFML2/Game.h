@@ -31,4 +31,8 @@ private:
 	Player player;
 	int interfaceCommande;
 	Ennemi* ennemies[3];
+	bool gauche = false;
+	bool droite = false;
+	bool haut = false;
+	bool bas = false;
 };
