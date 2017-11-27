@@ -4,7 +4,7 @@
 
 BaseEnemy::BaseEnemy(Vector2f basePos, Texture texture) : Ennemi(basePos, texture)
 {
-	speed = 3;
+	speed = 4;
 }
 
 BaseEnemy::~BaseEnemy()
