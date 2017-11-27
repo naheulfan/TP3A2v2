@@ -106,6 +106,7 @@
     <ClInclude Include="Testeur.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Ressources\BaseProjectile.png" />
     <Image Include="Ressources\pant.png" />
     <Image Include="Ressources\starfieldSprite.png" />
   </ItemGroup>

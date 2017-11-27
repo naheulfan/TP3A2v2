@@ -64,6 +64,9 @@
     <Image Include="Ressources\pant.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+    <Image Include="Ressources\BaseProjectile.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProjetSFML2.rc">
