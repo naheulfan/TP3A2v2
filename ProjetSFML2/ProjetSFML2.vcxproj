@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ressources\BaseProjectile.png" />
-    <Image Include="Ressources\pant.png" />
+    <Image Include="Ressources\Ennemi1.png" />
     <Image Include="Ressources\starfieldSprite.png" />
   </ItemGroup>
   <ItemGroup>

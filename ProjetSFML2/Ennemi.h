@@ -12,6 +12,5 @@ public:
 private:
 	Texture texture;
 	Sprite sprite;
-	Texture texture;
 };
 

@@ -85,10 +85,10 @@
     <Image Include="Ressources\starfieldSprite.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
-    <Image Include="Ressources\pant.png">
+    <Image Include="Ressources\BaseProjectile.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
-    <Image Include="Ressources\BaseProjectile.png">
+    <Image Include="Ressources\Ennemi1.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
   </ItemGroup>
