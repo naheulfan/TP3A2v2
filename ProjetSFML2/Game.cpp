@@ -32,7 +32,7 @@ int Game::run()
 
 bool Game::init()
 {
-	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"));
+	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"))
 	{
 		return false;
 	}
@@ -41,12 +41,13 @@ bool Game::init()
 	background[1].setTexture(backgroundT);
 	background[1].setPosition(2560, 0);
 
-	if(!playerTexture.loadFromFile("Ressources\\Spaceship.png"));
+	if(!playerTexture.loadFromFile("Ressources\\Spaceship.png"))
 	{
 		return false;
 	}
-	player.Init(playerTexture, Vector2f(0, HAUTEUR / 2));
-
+	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
+	enemyTexture.loadFromFile("Ressources\\pant.png");
+	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 2), enemyTexture);
 	return true;
 }
 
@@ -100,7 +101,7 @@ void Game::update()
 		background[0].setPosition(1280, 0);
 	}
 #pragma endregion BackgroundUpdates
-
+	ennemies[0]->Update();
 
 }
 
@@ -110,6 +111,7 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
+	ennemies[0]->Draw(mainWin);
 	player.Draw(mainWin);
 	mainWin.display();
 }

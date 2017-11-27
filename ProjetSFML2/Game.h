@@ -1,5 +1,5 @@
 #pragma once
-
+#include "BaseEnemy.h"
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Player.h"
@@ -25,8 +25,10 @@ private:
 	View view;
 	Event event;
 	Texture backgroundT;
+	Texture enemyTexture;
 	Sprite background[2];
 	Texture playerTexture;
 	Player player;
 	int interfaceCommande;
+	Ennemi* ennemies[3];
 };
