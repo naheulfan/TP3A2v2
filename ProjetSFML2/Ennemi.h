@@ -11,5 +11,6 @@ public:
 	virtual void Draw(RenderWindow &window) = 0;
 private:
 	Sprite sprite;
+	Texture texture;
 };
 
