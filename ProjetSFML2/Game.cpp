@@ -32,7 +32,7 @@ int Game::run()
 
 bool Game::init()
 {
-	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"));
+	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"))
 	{
 		return false;
 	}
@@ -41,11 +41,11 @@ bool Game::init()
 	background[1].setTexture(backgroundT);
 	background[1].setPosition(2560, 0);
 
-	if(!playerTexture.loadFromFile("Ressources\\Spaceship.png"));
+	if(!playerTexture.loadFromFile("Ressources\\Spaceship.png"))
 	{
 		return false;
 	}
-	player.Init(playerTexture, Vector2f(0, HAUTEUR / 2));
+	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
 
 	return true;
 }
