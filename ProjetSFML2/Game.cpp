@@ -64,28 +64,11 @@ void Game::getInputs()
 		{
 			mainWin.close();
 		}
-		interfaceCommande = 0;
-		if (event.type == Event::KeyPressed)
-		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			{
-				interfaceCommande = 4;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			{
-				interfaceCommande = 3;
-			}
-			player.Move(interfaceCommande, 1);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			{
-				interfaceCommande = 2;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			{
-				interfaceCommande = 1;
-			}
-			player.Move(interfaceCommande, 2);
-		}
+		(Keyboard::isKeyPressed(Keyboard::W)) ? haut = true : haut = false;
+		(Keyboard::isKeyPressed(Keyboard::S)) ? bas = true : bas = false;
+		(Keyboard::isKeyPressed(Keyboard::A)) ? gauche = true : gauche = false;
+		(Keyboard::isKeyPressed(Keyboard::D)) ? droite = true : droite = false;
+		
 	}
 }
 
@@ -103,6 +86,10 @@ void Game::update()
 	{
 		background[0].setPosition(1280, 0);
 	}
+	if (gauche) player.Move(4);
+	if (droite) player.Move(3);
+	if (haut) player.Move(1);
+	if (bas) player.Move(2);
 #pragma endregion BackgroundUpdates
 	ennemies[0]->Update();
 	ennemies[2]->Update();

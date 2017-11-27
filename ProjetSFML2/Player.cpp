@@ -17,28 +17,23 @@ void Player::Draw(RenderWindow &window)
 {
 	window.draw(sprite);
 }
-void Player::Move(int command, int axis)
+void Player::Move(int command)
 {
-	if (axis == 2)
+	if (command == 1)
 	{
-		if (command == 2)
-		{
-			sprite.move(0, -speed);
-		}
-		if (command == 1)
-		{
+		sprite.move(0, -speed);
+	}
+	if (command == 2)
+	{
 			sprite.move(0, speed);
-		}
 	}
-	if (axis == 1)
+	if (command == 3)
 	{
-		if (command == 3)
-		{
 			sprite.move(speed, 0);
-		}
-		if (command == 4)
-		{
-			sprite.move(-speed, 0);
-		}
 	}
+	if (command == 4)
+	{
+		sprite.move(-speed, 0);
+	}
+
 }

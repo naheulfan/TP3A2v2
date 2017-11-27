@@ -10,6 +10,6 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw(RenderWindow &window) = 0;
 private:
-	
+	Sprite sprite;
 };
 
