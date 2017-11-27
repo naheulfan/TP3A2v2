@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseEnemy.h"
+#include "Mothership.h"
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Player.h"
@@ -26,6 +27,7 @@ private:
 	Event event;
 	Texture backgroundT;
 	Texture enemyTexture;
+	Texture enemyTexture2;
 	Sprite background[2];
 	Texture playerTexture;
 	Player player;
