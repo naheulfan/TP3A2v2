@@ -46,7 +46,8 @@ bool Game::init()
 		return false;
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
-
+	enemyTexture.loadFromFile("Ressources\\pant.png");
+	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 2), enemyTexture);
 	return true;
 }
 
@@ -100,7 +101,7 @@ void Game::update()
 		background[0].setPosition(1280, 0);
 	}
 #pragma endregion BackgroundUpdates
-
+	ennemies[0]->Update();
 
 }
 
@@ -110,6 +111,7 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
+	ennemies[0]->Draw(mainWin);
 	player.Draw(mainWin);
 	mainWin.display();
 }

@@ -88,12 +88,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseEnemy.cpp" />
+    <ClCompile Include="Ennemi.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Testeur.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="Ennemi.h" />
     <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
@@ -101,6 +105,7 @@
     <ClInclude Include="Testeur.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Ressources\pant.png" />
     <Image Include="Ressources\starfieldSprite.png" />
   </ItemGroup>
   <ItemGroup>
