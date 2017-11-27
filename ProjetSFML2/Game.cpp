@@ -47,7 +47,10 @@ bool Game::init()
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
 	enemyTexture.loadFromFile("Ressources\\pant.png");
-	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 2), enemyTexture);
+	enemyTexture2.loadFromFile("Ressources\\Mothership.png");
+	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 5), enemyTexture);
+	ennemies[1] = new Mothership(Vector2f(LARGEUR_ECRAN - (enemyTexture2.getSize().x), HAUTEUR_ECRAN / 5), enemyTexture2);
+	ennemies[2] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN - (HAUTEUR_ECRAN / 3)), enemyTexture);
 	return true;
 }
 
@@ -102,6 +105,7 @@ void Game::update()
 	}
 #pragma endregion BackgroundUpdates
 	ennemies[0]->Update();
+	ennemies[2]->Update();
 
 }
 
@@ -111,7 +115,10 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
-	ennemies[0]->Draw(mainWin);
+	for (int i = 0; i < 3; i++)
+	{
+		ennemies[i]->Draw(mainWin);
+	}
 	player.Draw(mainWin);
 	mainWin.display();
 }

@@ -92,6 +92,7 @@
     <ClCompile Include="Ennemi.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Testeur.cpp" />
   </ItemGroup>
@@ -100,6 +101,7 @@
     <ClInclude Include="Ennemi.h" />
     <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Mothership.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Testeur.h" />
