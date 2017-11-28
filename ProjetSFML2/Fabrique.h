@@ -1,5 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Cargoship.h"
+#include "BaseEnemy.h"
+#include "Fighter.h"
+#include "StealthFighter.h"
 using namespace sf;
 
 class Fabrique

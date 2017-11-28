@@ -4,23 +4,23 @@ Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
 
-	mainWin.create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
-	view = mainWin.getDefaultView();
+	mainWin->create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
+	view = mainWin->getDefaultView();
 
 	//Synchonisation coordonnée à l'écran!  Normalement 60 frames par secondes. À faire absolument
-	mainWin.setVerticalSyncEnabled(true);
+	mainWin->setVerticalSyncEnabled(true);
 	//mainWin.setFramerateLimit(60);  //Équivalent... normalement, mais pas toujours. À utiliser si la synchonisation de l'écran fonctionne mal.
 	//https://www.sfml-dev.org/tutorials/2.0/window-window.php#controlling-the-framerate
 }
 
 int Game::run()
 {
-	if (!init())
+	if (!init(mainWin))
 	{
 		return EXIT_FAILURE;
 	}
 
-	while (mainWin.isOpen())
+	while (mainWin->isOpen())
 	{
 		getInputs();
 		update();
@@ -30,7 +30,7 @@ int Game::run()
 	return EXIT_SUCCESS;
 }
 
-bool Game::init()
+bool Game::init(RenderWindow * const window)
 {
 	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"))
 	{
@@ -46,29 +46,66 @@ bool Game::init()
 		return false;
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
-	enemyTexture.loadFromFile("Ressources\\Ennemi1.png");
-	enemyTexture2.loadFromFile("Ressources\\Mothership.png");
-	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 5), enemyTexture);
-	ennemies[1] = new Mothership(Vector2f(LARGEUR_ECRAN - (enemyTexture2.getSize().x), HAUTEUR_ECRAN / 5), enemyTexture2);
-	ennemies[2] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN - (HAUTEUR_ECRAN / 3)), enemyTexture);
+	for (int i = 0; i < sizeof(texturesEnnemis); i++)
+	{
+		if (!texturesEnnemis[i].loadFromFile("Ressources\\Enemy_" + std::to_string(i + 1) + ".png"))
+		{
+			return false;
+		}
+	}
+
+	//Initie le spawner et le boss
+	ennemies[0] = new Mothership(Vector2f(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), HAUTEUR_ECRAN / 5), texturesEnnemis[0]);
+	spawner.setRadius(25);
+	spawner.setOrigin(25, 25);
+	spawner.setFillColor(Color::Transparent);
+	spawner.setOutlineColor(Color::Red);
+	spawner.setOutlineThickness(3);
+	spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), texturesEnnemis[0].getSize().y / 2);
+
+	//Charge les données de la fabrique
+	Fabrique::chargerData(window);
+	
 	return true;
 }
 
 void Game::getInputs()
 {
 	//On passe l'événement en référence et celui-ci est chargé du dernier événement reçu!
-	while (mainWin.pollEvent(event))
+	while (mainWin->pollEvent(event))
 	{
 		//x sur la fenêtre
 		if (event.type == Event::Closed)
 		{
-			mainWin.close();
+			mainWin->close();
 		}
 		(Keyboard::isKeyPressed(Keyboard::W)) ? haut = true : haut = false;
 		(Keyboard::isKeyPressed(Keyboard::S)) ? bas = true : bas = false;
 		(Keyboard::isKeyPressed(Keyboard::A)) ? gauche = true : gauche = false;
 		(Keyboard::isKeyPressed(Keyboard::D)) ? droite = true : droite = false;
-		
+
+		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2 et Num3
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (event.key.code == sf::Keyboard::Num1)
+			{
+				spawnNumber = 1;
+			}
+			else if (event.key.code == sf::Keyboard::Num2)
+			{
+				spawnNumber = 2;
+			}
+
+			else if (event.key.code == sf::Keyboard::Num3)
+			{
+				spawnNumber = 3;
+			}
+
+			else if (event.key.code == sf::Keyboard::Num4)
+			{
+				spawnNumber = 4;
+			}
+		}
 	}
 }
 
@@ -92,20 +129,40 @@ void Game::update()
 	if (bas) player.Move(2);
 #pragma endregion BackgroundUpdates
 	ennemies[0]->Update();
-	ennemies[2]->Update();
+	if (spawnNumber > 0)
+	{
+		Fabrique::setPosition(spawner.getPosition());
+		switch (spawnNumber)
+		{
+		case 1:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(Walker));
+			break;
+		case 2:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(Flyer));
+			break;
+		case 3:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+			break;
+		case 4:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+			break;
+		}
+
+		spawnNumber = 0;
+	}
 
 }
 
 void Game::draw()
 {
 	//Toujours important d'effacer l'écran précédent
-	mainWin.clear();
-	mainWin.draw(background[0]);
-	mainWin.draw(background[1]);
-	for (int i = 0; i < 3; i++)
+	mainWin->clear();
+	mainWin->draw(background[0]);
+	mainWin->draw(background[1]);
+	for (int i = 0; i < sizeof(ennemies); i++)
 	{
-		ennemies[i]->Draw(mainWin);
+		ennemies[i]->Draw(*mainWin);
 	}
-	player.Draw(mainWin);
-	mainWin.display();
+	player.Draw(*mainWin);
+	mainWin->display();
 }
