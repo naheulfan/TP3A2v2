@@ -45,6 +45,9 @@
     <ClCompile Include="Fighter.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Projectiles.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -80,15 +83,18 @@
     <ClInclude Include="StealthFighter.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Projectiles.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ressources\starfieldSprite.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
-    <Image Include="Ressources\pant.png">
+    <Image Include="Ressources\BaseProjectile.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
-    <Image Include="Ressources\BaseProjectile.png">
+    <Image Include="Ressources\Ennemi1.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
   </ItemGroup>
