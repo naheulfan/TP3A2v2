@@ -17,7 +17,7 @@ private:
 	const int LARGEUR_ECRAN = 1280;
 	const int HAUTEUR_ECRAN = 720;
 
-	bool init(RenderWindow * const window);
+	bool init();
 	void getInputs();
 	void update();
 	void draw();
@@ -25,7 +25,14 @@ private:
 	CircleShape spawner;
 	int spawnNumber;
 
-	RenderWindow* mainWin;
+	//Notre vecteur de pointeurs de la super-classe
+	std::vector<Ennemi*> vecteurEnnemis;
+
+	//To remove
+	int compteurGlobal = 1;
+	//To remove
+
+	RenderWindow mainWin;
 	View view;
 	Event event;
 	Texture backgroundT;

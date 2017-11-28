@@ -3,24 +3,23 @@
 Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
-
-	mainWin->create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
-	view = mainWin->getDefaultView();
+	mainWin.create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
+	view = mainWin.getDefaultView();
 
 	//Synchonisation coordonnée à l'écran!  Normalement 60 frames par secondes. À faire absolument
-	mainWin->setVerticalSyncEnabled(true);
+	mainWin.setVerticalSyncEnabled(true);
 	//mainWin.setFramerateLimit(60);  //Équivalent... normalement, mais pas toujours. À utiliser si la synchonisation de l'écran fonctionne mal.
 	//https://www.sfml-dev.org/tutorials/2.0/window-window.php#controlling-the-framerate
 }
 
 int Game::run()
 {
-	if (!init(mainWin))
+	if (!init())
 	{
 		return EXIT_FAILURE;
 	}
 
-	while (mainWin->isOpen())
+	while (mainWin.isOpen())
 	{
 		getInputs();
 		update();
@@ -30,7 +29,7 @@ int Game::run()
 	return EXIT_SUCCESS;
 }
 
-bool Game::init(RenderWindow * const window)
+bool Game::init()
 {
 	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"))
 	{
@@ -46,7 +45,7 @@ bool Game::init(RenderWindow * const window)
 		return false;
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
-	for (int i = 0; i < sizeof(texturesEnnemis); i++)
+	for (int i = 0; i < 5; i++)
 	{
 		if (!texturesEnnemis[i].loadFromFile("Ressources\\Enemy_" + std::to_string(i + 1) + ".png"))
 		{
@@ -64,7 +63,7 @@ bool Game::init(RenderWindow * const window)
 	spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), texturesEnnemis[0].getSize().y / 2);
 
 	//Charge les données de la fabrique
-	Fabrique::chargerData(window);
+	Fabrique::chargerData(&mainWin);
 	
 	return true;
 }
@@ -72,19 +71,19 @@ bool Game::init(RenderWindow * const window)
 void Game::getInputs()
 {
 	//On passe l'événement en référence et celui-ci est chargé du dernier événement reçu!
-	while (mainWin->pollEvent(event))
+	while (mainWin.pollEvent(event))
 	{
 		//x sur la fenêtre
 		if (event.type == Event::Closed)
 		{
-			mainWin->close();
+			mainWin.close();
 		}
 		(Keyboard::isKeyPressed(Keyboard::W)) ? haut = true : haut = false;
 		(Keyboard::isKeyPressed(Keyboard::S)) ? bas = true : bas = false;
 		(Keyboard::isKeyPressed(Keyboard::A)) ? gauche = true : gauche = false;
 		(Keyboard::isKeyPressed(Keyboard::D)) ? droite = true : droite = false;
 
-		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2 et Num3
+		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2, Num3 et Num4
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::Num1)
@@ -123,11 +122,13 @@ void Game::update()
 	{
 		background[0].setPosition(1280, 0);
 	}
+#pragma endregion BackgroundUpdates
+
 	if (gauche) player.Move(4);
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
 	if (bas) player.Move(2);
-#pragma endregion BackgroundUpdates
+
 	ennemies[0]->Update();
 	if (spawnNumber > 0)
 	{
@@ -135,34 +136,33 @@ void Game::update()
 		switch (spawnNumber)
 		{
 		case 1:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Walker));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(baseEnemy, texturesEnnemis[1]));
 			break;
 		case 2:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Flyer));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(fighter, texturesEnnemis[2]));
 			break;
 		case 3:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(stealthFighter, texturesEnnemis[3]));
 			break;
 		case 4:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(cargoship, texturesEnnemis[4]));
 			break;
 		}
-
 		spawnNumber = 0;
 	}
-
 }
 
 void Game::draw()
 {
 	//Toujours important d'effacer l'écran précédent
-	mainWin->clear();
-	mainWin->draw(background[0]);
-	mainWin->draw(background[1]);
-	for (int i = 0; i < sizeof(ennemies); i++)
+	mainWin.clear();
+	mainWin.draw(background[0]);
+	mainWin.draw(background[1]);
+	ennemies[0]->Draw(mainWin);
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
-		ennemies[i]->Draw(*mainWin);
+		vecteurEnnemis[i]->Draw(mainWin);
 	}
-	player.Draw(*mainWin);
-	mainWin->display();
+	player.Draw(mainWin);
+	mainWin.display();
 }
