@@ -46,7 +46,7 @@ bool Game::init()
 		return false;
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
-	enemyTexture.loadFromFile("Ressources\\pant.png");
+	enemyTexture.loadFromFile("Ressources\\Ennemi1.png");
 	enemyTexture2.loadFromFile("Ressources\\Mothership.png");
 	ennemies[0] = new BaseEnemy(Vector2f(LARGEUR_ECRAN, HAUTEUR_ECRAN / 5), enemyTexture);
 	ennemies[1] = new Mothership(Vector2f(LARGEUR_ECRAN - (enemyTexture2.getSize().x), HAUTEUR_ECRAN / 5), enemyTexture2);
