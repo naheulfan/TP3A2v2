@@ -9,8 +9,11 @@ public:
 	~Ennemi();
 	virtual void Update() = 0;
 	virtual void Draw(RenderWindow &window) = 0;
+	IntRect getIntRect();
 private:
 	Texture texture;
 	Sprite sprite;
+protected:
+	float health;
 };
 

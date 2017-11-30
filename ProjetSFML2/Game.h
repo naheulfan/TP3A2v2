@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Player.h"
+#include "BaseEnemy.h"
+#include "BaseProjectile.h"
 
 using namespace sf;
 
@@ -24,7 +26,6 @@ private:
 
 	CircleShape spawner;
 	int spawnNumber;
-
 	//Notre vecteur de pointeurs de la super-classe
 	std::vector<Ennemi*> vecteurEnnemis;
 
@@ -46,4 +47,8 @@ private:
 	bool droite = false;
 	bool haut = false;
 	bool bas = false;
+	bool space = false;
+	std::vector<Projectiles*> projectiles;
+	Sprite baseProjectile;
+	Texture baseProjectileT;
 };

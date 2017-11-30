@@ -5,6 +5,7 @@
 BaseEnemy::BaseEnemy(Vector2f basePos, Texture texture) : Ennemi(basePos, texture)
 {
 	speed = 4;
+	health = 1;
 }
 
 BaseEnemy::~BaseEnemy()

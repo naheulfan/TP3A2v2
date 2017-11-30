@@ -9,6 +9,8 @@ void Player::Init(Texture &playerTexture, Vector2f basePos)
 {
 	setTexture(playerTexture);
 	setPosition(basePos);
+	currentWeapon = TypeProjectile::base;
+	fireRate.restart();
 }
 Player::~Player()
 {
@@ -36,4 +38,21 @@ void Player::Move(int command)
 		move(-speed, 0);
 	}
 
+}
+
+Projectiles* Player::Shoot()
+{
+	if (currentWeapon == TypeProjectile::base)
+	{
+		fireRate.restart();
+		return new BaseProjectile(this->getPosition(), true);
+	}
+}
+bool Player::CanShoot()
+{
+	if (fireRate.getElapsedTime() > seconds(0.25))
+	{
+		return true;
+	}
+	return false;
 }

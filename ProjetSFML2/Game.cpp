@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Collisions.h"
 Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
@@ -64,7 +64,9 @@ bool Game::init()
 
 	//Charge les données de la fabrique
 	Fabrique::chargerData(&mainWin);
-	
+
+	baseProjectileT.loadFromFile("Ressources\\BaseProjectile.png");
+	baseProjectile.setTexture(baseProjectileT);
 	return true;
 }
 
@@ -82,6 +84,14 @@ void Game::getInputs()
 		(Keyboard::isKeyPressed(Keyboard::S)) ? bas = true : bas = false;
 		(Keyboard::isKeyPressed(Keyboard::A)) ? gauche = true : gauche = false;
 		(Keyboard::isKeyPressed(Keyboard::D)) ? droite = true : droite = false;
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			space = true;
+		}
+		else
+		{
+			space = false;
+		}
 
 		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2, Num3 et Num4
 		if (event.type == sf::Event::KeyPressed)
@@ -107,6 +117,7 @@ void Game::getInputs()
 		}
 	}
 }
+#include <iostream>
 void Game::update()
 {
 #pragma region BackgroundUpdates
@@ -141,8 +152,21 @@ void Game::update()
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
 	if (bas) player.Move(2);
-
+	if (space && player.CanShoot()) projectiles.push_back(player.Shoot());
 	ennemies[0]->Update();
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		baseProjectile.setPosition(projectiles.at(i)->getPosition());
+		projectiles.at(i)->Update();
+		for (int j = 0; j < vecteurEnnemis.size(); j++)
+		{
+			if (Collisions::CheckCollision(vecteurEnnemis.at(j)->getIntRect(), baseProjectile.getTextureRect()))
+			{
+				std::cout << "Touche" << std::endl;
+				baseProjectile.setColor(sf::Color::Red);
+			}
+		}
+	}
 	if (spawnNumber > 0)
 	{
 		Fabrique::setPosition(spawner.getPosition());
@@ -162,7 +186,9 @@ void Game::update()
 			break;
 		}
 		spawnNumber = 0;
+
 	}
+	
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
 		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
@@ -174,7 +200,6 @@ void Game::update()
 	{
 		vecteurEnnemis[i]->Update();
 	}
-	
 }
 
 void Game::draw()
@@ -189,5 +214,9 @@ void Game::draw()
 		vecteurEnnemis[i]->Draw(mainWin);
 	}
 	player.Draw(mainWin);
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles.at(i)->Draw(baseProjectile, mainWin);
+	}
 	mainWin.display();
 }
