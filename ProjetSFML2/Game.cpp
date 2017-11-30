@@ -3,7 +3,6 @@
 Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
-
 	mainWin.create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
 	view = mainWin.getDefaultView();
 
@@ -65,6 +64,8 @@ bool Game::init()
 	spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), texturesEnnemis[0].getSize().y / 2);
 */
 	//Charge les données de la fabrique
+	Fabrique::chargerData(&mainWin);
+	
 	//Fabrique::chargerData(window);
 	baseProjectileT.loadFromFile("Ressources\\BaseProjectile.png");
 	baseProjectile.setTexture(baseProjectileT);
@@ -94,8 +95,7 @@ void Game::getInputs()
 			space = false;
 		}
 
-
-		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2 et Num3
+		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2, Num3 et Num4
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::Num1)
@@ -134,6 +134,8 @@ void Game::update()
 	{
 		background[0].setPosition(1280, 0);
 	}
+#pragma endregion BackgroundUpdates
+
 	if (gauche) player.Move(4);
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
@@ -148,26 +150,24 @@ void Game::update()
 	}
 	if (spawnNumber > 0)
 	{
-		//Fabrique::setPosition(spawner.getPosition());
-		//switch (spawnNumber)
-		//{
-		//case 1:
-		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Walker));
-		//	break;
-		//case 2:
-		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Flyer));
-		//	break;
-		//case 3:
-		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
-		//	break;
-		//case 4:
-		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
-		//	break;
-		//}
-
-		//spawnNumber = 0;
+		Fabrique::setPosition(spawner.getPosition());
+		switch (spawnNumber)
+		{
+		case 1:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(baseEnemy, texturesEnnemis[1]));
+			break;
+		case 2:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(fighter, texturesEnnemis[2]));
+			break;
+		case 3:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(stealthFighter, texturesEnnemis[3]));
+			break;
+		case 4:
+			vecteurEnnemis.push_back(Fabrique::createEnemy(cargoship, texturesEnnemis[4]));
+			break;
+		}
+		spawnNumber = 0;
 	}
-
 }
 
 void Game::draw()
@@ -183,6 +183,7 @@ void Game::draw()
 	player.Draw(mainWin);
 	for (int i = 0; i < projectiles.size(); i++)
 	{
+		vecteurEnnemis[i]->Draw(mainWin);
 		projectiles.at(i)->Draw(baseProjectile, mainWin);
 	}
 	mainWin.display();
