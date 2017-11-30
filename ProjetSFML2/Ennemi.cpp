@@ -13,3 +13,8 @@ Ennemi::~Ennemi()
 {
 
 }
+
+IntRect Ennemi::getIntRect()
+{
+	return sprite.getTextureRect();
+}

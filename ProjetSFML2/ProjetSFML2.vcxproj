@@ -107,6 +107,7 @@
     <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="BaseProjectile.h" />
     <ClInclude Include="Cargoship.h" />
+    <ClInclude Include="Collisions.h" />
     <ClInclude Include="Ennemi.h" />
     <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Fighter.h" />

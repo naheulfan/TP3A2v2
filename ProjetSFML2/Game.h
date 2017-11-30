@@ -1,5 +1,5 @@
 #pragma once
-//#include "Fabrique.h"
+#include "Fabrique.h"
 #include "Mothership.h"
 #include <SFML/Graphics.hpp>
 #include "Game.h"
@@ -26,6 +26,12 @@ private:
 
 	CircleShape spawner;
 	int spawnNumber;
+	//Notre vecteur de pointeurs de la super-classe
+	std::vector<Ennemi*> vecteurEnnemis;
+
+	//To remove
+	int compteurGlobal = 1;
+	//To remove
 
 	RenderWindow mainWin;
 	View view;

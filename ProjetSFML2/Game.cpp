@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Collisions.h"
 Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
@@ -56,13 +56,13 @@ bool Game::init()
 	//Initie le spawner et le boss
 	ennemies[0] = new Mothership(Vector2f(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), HAUTEUR_ECRAN / 5), texturesEnnemis[0]);
 	ennemies[1] = new BaseEnemy(Vector2f(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), HAUTEUR_ECRAN / 5), texturesEnnemis[2]);
-	/*spawner.setRadius(25);
+	spawner.setRadius(25);
 	spawner.setOrigin(25, 25);
 	spawner.setFillColor(Color::Transparent);
 	spawner.setOutlineColor(Color::Red);
 	spawner.setOutlineThickness(3);
 	spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), texturesEnnemis[0].getSize().y / 2);
-*/
+
 	//Charge les données de la fabrique
 	Fabrique::chargerData(&mainWin);
 	
@@ -119,7 +119,7 @@ void Game::getInputs()
 		}
 	}
 }
-
+#include <iostream>
 void Game::update()
 {
 #pragma region BackgroundUpdates
@@ -135,7 +135,7 @@ void Game::update()
 		background[0].setPosition(1280, 0);
 	}
 #pragma endregion BackgroundUpdates
-
+	
 	if (gauche) player.Move(4);
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
@@ -146,7 +146,16 @@ void Game::update()
 	ennemies[1]->Update();
 	for (int i = 0; i < projectiles.size(); i++)
 	{
+		baseProjectile.setPosition(projectiles.at(i)->getPosition());
 		projectiles.at(i)->Update();
+		for (int j = 0; j < vecteurEnnemis.size(); j++)
+		{
+			if (Collisions::CheckCollision(vecteurEnnemis.at(j)->getIntRect(), baseProjectile.getTextureRect()))
+			{
+				std::cout << "Touche" << std::endl;
+				baseProjectile.setColor(sf::Color::Red);
+			}
+		}
 	}
 	if (spawnNumber > 0)
 	{
@@ -167,6 +176,18 @@ void Game::update()
 			break;
 		}
 		spawnNumber = 0;
+
+	}
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
+	{
+		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
+		{
+			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
+		}
+	}
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
+	{
+		vecteurEnnemis[i]->Update();
 	}
 }
 
@@ -176,14 +197,14 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
-	for (int i = 0; i < 2; i++)
+	ennemies[0]->Draw(mainWin);
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
-		ennemies[i]->Draw(mainWin);
+		vecteurEnnemis[i]->Draw(mainWin);
 	}
 	player.Draw(mainWin);
 	for (int i = 0; i < projectiles.size(); i++)
 	{
-		vecteurEnnemis[i]->Draw(mainWin);
 		projectiles.at(i)->Draw(baseProjectile, mainWin);
 	}
 	mainWin.display();
