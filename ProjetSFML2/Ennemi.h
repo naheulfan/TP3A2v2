@@ -12,5 +12,7 @@ public:
 private:
 	Texture texture;
 	Sprite sprite;
+protected:
+	float health;
 };
 

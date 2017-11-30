@@ -16,3 +16,7 @@ void Projectiles::Draw(Sprite &sprite, RenderWindow &window)
 Projectiles::~Projectiles()
 {
 }
+TypeProjectile Projectiles::GetProjectileType()
+{
+	return this->projectileType;
+}

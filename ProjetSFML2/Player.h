@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "BaseProjectile.h"
 using namespace sf;
 class Player : public Sprite
 {
@@ -11,8 +12,13 @@ public:
 	void Update();
 	void Draw(RenderWindow &window);
 	void Move(int command);
+	Projectiles* Shoot();
+	void SetCurrentWeapon(TypeProjectile newWeapon);
+	bool CanShoot();
 private:
 	Sprite sprite;
 	const float speed = 10;
+	TypeProjectile currentWeapon;
+	Clock fireRate;
 };
 

@@ -1,5 +1,17 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+enum TypeProjectile
+{
+	base,
+	piercing,
+	emp,
+	explosive,
+	empowered,//les 5 premiers types appartiennent au joueur
+	red,
+	blue,
+	green,//les couleurs des projectiles
+	boss//les projectiles du boss ignorent la couleur du bouclier actif
+};
 using namespace sf;
 class Projectiles : public Sprite
 {
@@ -13,8 +25,11 @@ public:
 	~Projectiles();
 	virtual void Update() = 0;
 	void Draw(Sprite &sprite, RenderWindow &window);
+	TypeProjectile GetProjectileType();
 protected:
-	bool direction; //true = right, false = leftno u
-
+	bool direction; //true = right, false = left
+	TypeProjectile projectileType;
+	float speed;
+	float damage;
 };
 

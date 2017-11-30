@@ -1,9 +1,11 @@
 #pragma once
-#include "Fabrique.h"
+//#include "Fabrique.h"
 #include "Mothership.h"
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Player.h"
+#include "BaseEnemy.h"
+#include "BaseProjectile.h"
 
 using namespace sf;
 
@@ -17,7 +19,7 @@ private:
 	const int LARGEUR_ECRAN = 1280;
 	const int HAUTEUR_ECRAN = 720;
 
-	bool init(RenderWindow * const window);
+	bool init();
 	void getInputs();
 	void update();
 	void draw();
@@ -25,7 +27,7 @@ private:
 	CircleShape spawner;
 	int spawnNumber;
 
-	RenderWindow* mainWin;
+	RenderWindow mainWin;
 	View view;
 	Event event;
 	Texture backgroundT;
@@ -39,4 +41,8 @@ private:
 	bool droite = false;
 	bool haut = false;
 	bool bas = false;
+	bool space = false;
+	std::vector<Projectiles*> projectiles;
+	Sprite baseProjectile;
+	Texture baseProjectileT;
 };

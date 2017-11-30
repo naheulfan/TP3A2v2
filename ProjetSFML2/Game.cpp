@@ -4,23 +4,23 @@ Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
 
-	mainWin->create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
-	view = mainWin->getDefaultView();
+	mainWin.create(VideoMode(LARGEUR_ECRAN, HAUTEUR_ECRAN, 32), "TP3 Side scroller");  // , Style::Titlebar); / , Style::FullScreen);
+	view = mainWin.getDefaultView();
 
 	//Synchonisation coordonnée à l'écran!  Normalement 60 frames par secondes. À faire absolument
-	mainWin->setVerticalSyncEnabled(true);
+	mainWin.setVerticalSyncEnabled(true);
 	//mainWin.setFramerateLimit(60);  //Équivalent... normalement, mais pas toujours. À utiliser si la synchonisation de l'écran fonctionne mal.
 	//https://www.sfml-dev.org/tutorials/2.0/window-window.php#controlling-the-framerate
 }
 
 int Game::run()
 {
-	if (!init(mainWin))
+	if (!init())
 	{
 		return EXIT_FAILURE;
 	}
 
-	while (mainWin->isOpen())
+	while (mainWin.isOpen())
 	{
 		getInputs();
 		update();
@@ -30,7 +30,7 @@ int Game::run()
 	return EXIT_SUCCESS;
 }
 
-bool Game::init(RenderWindow * const window)
+bool Game::init()
 {
 	if(!backgroundT.loadFromFile("Ressources\\starfieldSprite.png"))
 	{
@@ -46,7 +46,7 @@ bool Game::init(RenderWindow * const window)
 		return false;
 	}
 	player.Init(playerTexture, Vector2f(0, HAUTEUR_ECRAN / 2));
-	for (int i = 0; i < sizeof(texturesEnnemis); i++)
+	for (int i = 0; i < 5; i++)
 	{
 		if (!texturesEnnemis[i].loadFromFile("Ressources\\Enemy_" + std::to_string(i + 1) + ".png"))
 		{
@@ -56,33 +56,44 @@ bool Game::init(RenderWindow * const window)
 
 	//Initie le spawner et le boss
 	ennemies[0] = new Mothership(Vector2f(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), HAUTEUR_ECRAN / 5), texturesEnnemis[0]);
-	spawner.setRadius(25);
+	ennemies[1] = new BaseEnemy(Vector2f(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), HAUTEUR_ECRAN / 5), texturesEnnemis[2]);
+	/*spawner.setRadius(25);
 	spawner.setOrigin(25, 25);
 	spawner.setFillColor(Color::Transparent);
 	spawner.setOutlineColor(Color::Red);
 	spawner.setOutlineThickness(3);
 	spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), texturesEnnemis[0].getSize().y / 2);
-
+*/
 	//Charge les données de la fabrique
-	Fabrique::chargerData(window);
-	
+	//Fabrique::chargerData(window);
+	baseProjectileT.loadFromFile("Ressources\\BaseProjectile.png");
+	baseProjectile.setTexture(baseProjectileT);
 	return true;
 }
 
 void Game::getInputs()
 {
 	//On passe l'événement en référence et celui-ci est chargé du dernier événement reçu!
-	while (mainWin->pollEvent(event))
+	while (mainWin.pollEvent(event))
 	{
 		//x sur la fenêtre
 		if (event.type == Event::Closed)
 		{
-			mainWin->close();
+			mainWin.close();
 		}
 		(Keyboard::isKeyPressed(Keyboard::W)) ? haut = true : haut = false;
 		(Keyboard::isKeyPressed(Keyboard::S)) ? bas = true : bas = false;
 		(Keyboard::isKeyPressed(Keyboard::A)) ? gauche = true : gauche = false;
 		(Keyboard::isKeyPressed(Keyboard::D)) ? droite = true : droite = false;
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			space = true;
+		}
+		else
+		{
+			space = false;
+		}
+
 
 		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2 et Num3
 		if (event.type == sf::Event::KeyPressed)
@@ -127,28 +138,34 @@ void Game::update()
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
 	if (bas) player.Move(2);
+	if (space && player.CanShoot()) projectiles.push_back(player.Shoot());
 #pragma endregion BackgroundUpdates
 	ennemies[0]->Update();
+	ennemies[1]->Update();
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles.at(i)->Update();
+	}
 	if (spawnNumber > 0)
 	{
-		Fabrique::setPosition(spawner.getPosition());
-		switch (spawnNumber)
-		{
-		case 1:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Walker));
-			break;
-		case 2:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Flyer));
-			break;
-		case 3:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
-			break;
-		case 4:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
-			break;
-		}
+		//Fabrique::setPosition(spawner.getPosition());
+		//switch (spawnNumber)
+		//{
+		//case 1:
+		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Walker));
+		//	break;
+		//case 2:
+		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Flyer));
+		//	break;
+		//case 3:
+		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+		//	break;
+		//case 4:
+		//	vecteurEnnemis.push_back(Fabrique::createEnemy(Hanger));
+		//	break;
+		//}
 
-		spawnNumber = 0;
+		//spawnNumber = 0;
 	}
 
 }
@@ -156,13 +173,17 @@ void Game::update()
 void Game::draw()
 {
 	//Toujours important d'effacer l'écran précédent
-	mainWin->clear();
-	mainWin->draw(background[0]);
-	mainWin->draw(background[1]);
-	for (int i = 0; i < sizeof(ennemies); i++)
+	mainWin.clear();
+	mainWin.draw(background[0]);
+	mainWin.draw(background[1]);
+	for (int i = 0; i < 2; i++)
 	{
-		ennemies[i]->Draw(*mainWin);
+		ennemies[i]->Draw(mainWin);
 	}
-	player.Draw(*mainWin);
-	mainWin->display();
+	player.Draw(mainWin);
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		projectiles.at(i)->Draw(baseProjectile, mainWin);
+	}
+	mainWin.display();
 }
