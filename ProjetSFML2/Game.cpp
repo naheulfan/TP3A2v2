@@ -107,7 +107,6 @@ void Game::getInputs()
 		}
 	}
 }
-
 void Game::update()
 {
 #pragma region BackgroundUpdates
@@ -123,6 +122,20 @@ void Game::update()
 		background[0].setPosition(1280, 0);
 	}
 #pragma endregion BackgroundUpdates
+
+	//On vérifie que le joueur ne sort pas de l'écran
+	if (player.getPosition().x <= 0)
+		gauche = false;
+	if (player.getPosition().x >= LARGEUR_ECRAN - ennemies[0]->getGlobalBounds().width - player.getGlobalBounds().width)
+		droite = false;
+
+	//Si le joueur atteint le haut de l'écran, va réapparaître au bas de l'écran
+	if (player.getPosition().y <= 0 - player.getGlobalBounds().height)
+		player.setPosition(player.getPosition().x, HAUTEUR_ECRAN);
+	//Sinon, si le joueur atteint le bas de l'écran, va réapparaître au haut de l'écran
+	else if (player.getPosition().y >= HAUTEUR_ECRAN)
+		player.setPosition(player.getPosition().x, 0 - player.getGlobalBounds().height);
+
 
 	if (gauche) player.Move(4);
 	if (droite) player.Move(3);
@@ -150,6 +163,18 @@ void Game::update()
 		}
 		spawnNumber = 0;
 	}
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
+	{
+		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
+		{
+			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
+		}
+	}
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
+	{
+		vecteurEnnemis[i]->Update();
+	}
+	
 }
 
 void Game::draw()
