@@ -161,7 +161,11 @@ void Game::update()
 		{
 			if (vecteurEnnemis.at(j)->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 			{
-				
+				vecteurEnnemis.at(j)->Damage(projectiles.at(i)->GetDamage());
+				if (vecteurEnnemis.at(j)->GetHealth() <= 0)
+				{
+					vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
+				}
 			}
 		}
 		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)

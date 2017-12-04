@@ -25,6 +25,7 @@ public:
 	~Projectiles();
 	virtual void Update() = 0;
 	void Draw(Sprite &sprite, RenderWindow &window);
+	float GetDamage();
 	TypeProjectile GetProjectileType();
 protected:
 	bool direction; //true = right, false = left
