@@ -12,7 +12,6 @@ public:
 	IntRect getIntRect();
 private:
 	Texture texture;
-	Sprite sprite;
 protected:
 	float health;
 };

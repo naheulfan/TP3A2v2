@@ -92,7 +92,7 @@ void Game::getInputs()
 		{
 			space = false;
 		}
-
+		
 		//Permet de faire apparaître l'ennemi désiré à l'aide des touches Num1, Num2, Num3 et Num4
 		if (event.type == sf::Event::KeyPressed)
 		{
@@ -147,7 +147,6 @@ void Game::update()
 	else if (player.getPosition().y >= HAUTEUR_ECRAN)
 		player.setPosition(player.getPosition().x, 0 - player.getGlobalBounds().height);
 
-
 	if (gauche) player.Move(4);
 	if (droite) player.Move(3);
 	if (haut) player.Move(1);
@@ -165,6 +164,34 @@ void Game::update()
 				std::cout << "Touche" << std::endl;
 				baseProjectile.setColor(sf::Color::Red);
 			}
+		}
+	}
+
+	int random = rand() % 100;
+	if (activeEnemies <= 10)
+	{
+		if (spawnRate.getElapsedTime() > seconds(0.90))
+		{
+			if ((random >= 0 && random < 50))
+			{
+				spawnNumber = 1;
+			}
+			else if ((random >= 50 && random < 80))
+			{
+				spawnNumber = 2;
+			}
+
+			else if ((random >= 80 && random < 90))
+			{
+				spawnNumber = 3;
+			}
+
+			else if ((random >= 95 && random < 100))
+			{
+				spawnNumber = 4;
+			}
+			activeEnemies++;
+			spawnRate.restart();
 		}
 	}
 	if (spawnNumber > 0)
@@ -194,6 +221,7 @@ void Game::update()
 		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
 		{
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
+			activeEnemies--;
 		}
 	}
 	for (int i = 0; i < vecteurEnnemis.size(); i++)

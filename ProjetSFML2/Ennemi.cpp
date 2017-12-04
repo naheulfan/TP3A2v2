@@ -16,5 +16,5 @@ Ennemi::~Ennemi()
 
 IntRect Ennemi::getIntRect()
 {
-	return sprite.getTextureRect();
+	return this->getTextureRect();
 }

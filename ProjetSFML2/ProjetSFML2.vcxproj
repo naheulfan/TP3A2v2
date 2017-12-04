@@ -108,10 +108,12 @@
     <ClInclude Include="BaseProjectile.h" />
     <ClInclude Include="Cargoship.h" />
     <ClInclude Include="Collisions.h" />
+    <ClInclude Include="deque.h" />
     <ClInclude Include="Ennemi.h" />
     <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectiles.h" />

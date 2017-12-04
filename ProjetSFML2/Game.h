@@ -33,6 +33,9 @@ private:
 	int compteurGlobal = 1;
 	//To remove
 
+	Clock spawnRate;
+	int activeEnemies = 0;
+
 	RenderWindow mainWin;
 	View view;
 	Event event;
