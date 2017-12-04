@@ -117,10 +117,9 @@ void Game::getInputs()
 		}
 	}
 }
-#include <iostream>
-void Game::update()
+
+void Game::backgroundUpdate()
 {
-#pragma region BackgroundUpdates
 	background[0].setPosition(Vector2f(background[0].getPosition().x - 2, background[0].getPosition().y));
 	background[1].setPosition(Vector2f(background[1].getPosition().x - 2, background[1].getPosition().y));
 	if (background[0].getPosition().x <= -1280 && (background[1].getPosition().x > 1280 || background[1].getPosition().x <= -1280))
@@ -132,8 +131,10 @@ void Game::update()
 	{
 		background[0].setPosition(1280, 0);
 	}
-#pragma endregion BackgroundUpdates
+}
 
+void Game::playerUpdate()
+{
 	//On vérifie que le joueur ne sort pas de l'écran
 	if (player.getPosition().x <= 0)
 		gauche = false;
@@ -152,7 +153,10 @@ void Game::update()
 	if (haut) player.Move(1);
 	if (bas) player.Move(2);
 	if (space && player.CanShoot()) projectiles.push_back(player.Shoot());
-	ennemies[0]->Update();
+}
+
+void Game::projectileUpdate()
+{
 	for (int i = 0; i < projectiles.size(); i++)
 	{
 		baseProjectile.setPosition(projectiles.at(i)->getPosition());
@@ -183,7 +187,11 @@ void Game::update()
 			projectiles.erase(projectiles.begin() + i);
 		}
 	}
+}
 
+void Game::enemiesUpdate()
+{
+	ennemies[0]->Update();
 	int random = rand() % 100;
 	if (activeEnemies <= 10)
 	{
@@ -232,7 +240,7 @@ void Game::update()
 		spawnNumber = 0;
 
 	}
-	
+
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
 		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
@@ -245,6 +253,15 @@ void Game::update()
 	{
 		vecteurEnnemis[i]->Update();
 	}
+}
+
+#include <iostream>
+void Game::update()
+{
+	backgroundUpdate();
+	playerUpdate();
+	projectileUpdate();
+	enemiesUpdate();
 }
 
 void Game::draw()
