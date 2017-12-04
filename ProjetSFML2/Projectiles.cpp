@@ -20,3 +20,7 @@ TypeProjectile Projectiles::GetProjectileType()
 {
 	return this->projectileType;
 }
+float Projectiles::GetDamage()
+{
+	return damage;
+}
