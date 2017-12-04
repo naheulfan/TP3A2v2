@@ -159,11 +159,14 @@ void Game::update()
 		projectiles.at(i)->Update();
 		for (int j = 0; j < vecteurEnnemis.size(); j++)
 		{
-			if (Collisions::CheckCollision(vecteurEnnemis.at(j)->getIntRect(), baseProjectile.getTextureRect()))
+			if (vecteurEnnemis.at(j)->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 			{
-				std::cout << "Touche" << std::endl;
-				baseProjectile.setColor(sf::Color::Red);
+				
 			}
+		}
+		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)
+		{
+			projectiles.erase(projectiles.begin() + i);
 		}
 	}
 

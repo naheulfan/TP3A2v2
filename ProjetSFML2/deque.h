@@ -12,19 +12,54 @@ private:
 public:
 	//constructeur, le parametre permet construire une file avec un nombre d'elements en reserve.
 	//J'accepte un constructeur qui me prend pas de parametre et qui cree une file sans reserve. A vous de choisir celui qui vous plait le plus.
-	deque(size_t = 0);	
+	deque(size_t = 0);
+	{
+		cap = 20;
+		tete = 0;
+	}
 	~deque();			//destructeur
 	deque(const deque&);//copie constructeur
 	deque& operator=(const deque& other); //affectateur. copie les elements de other dans la file courante. O(n) 
 	void swap(deque& other); //echange les element des files courante et other O(1);
 
 	//selecteurs
-	size_t size()const; //retour le nombre d'elements contenu dans la file. O(1)
+	size_t size()const //retour le nombre d'elements contenu dans la file. O(1)
+	{
+		return size;
+	}
 	bool empty()const; //retourne true si la file est vide. O(1)
+	{
+		bool retval = false;
+		if (size = 0)
+		{
+			retval = true;
+		}
+		return retval;
+	}
 
 	//gestion de la memoire
-	void resize(size_t); //change la dimension. O(n)
-	void reserve(size_t);//augmente la capacite. O(n)
+	void resize(size_t newSize) //change la dimension. O(n)
+	{
+		if (newSize < tete)
+		{
+			tete = newSize - 1;
+		}
+
+	}
+	if ()
+	void reserve(size_t newCap)//augmente la capacite. O(n)
+	{
+		if (newCap > cap)
+		{
+			TYPE* newTab[newCap];
+			for (int i = 0; i < size; i++)
+			{
+				newTab[i] = tab[(i + tete) % cap];
+			}
+			tab = newTab;
+		}
+		
+	}
 	void clear();        //vide la memoire. O(1)
 
 						 //acces aux elements individuels
@@ -34,6 +69,7 @@ public:
 	//const TYPE& at(size_t)const; //Optionnel. Version constante de la methode precedente. A implanter si vous en avez besoin.
 
 	void push_back(const TYPE&); //Ajoute un element a la fin de la file. O(1) amortis
+
 	void pop_back(); //Retire l'element qui se trouve a la fin de la file. O(1)
 	void push_front(const TYPE&); //Ajoute un element au debut de la file. O(1) amortis
 	void pop_front(); //Retire l'element qui se trouve au debut de la file. O(1)

@@ -45,7 +45,8 @@ Projectiles* Player::Shoot()
 	if (currentWeapon == TypeProjectile::base)
 	{
 		fireRate.restart();
-		return new BaseProjectile(this->getPosition(), true);
+		return new BaseProjectile(Vector2f(getPosition().x + getTextureRect().width / 2, getPosition().y + getTextureRect().height / 2), true);
+		
 	}
 }
 bool Player::CanShoot()
