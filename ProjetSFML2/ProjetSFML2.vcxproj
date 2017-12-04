@@ -92,6 +92,7 @@
     <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="BaseProjectile.cpp" />
     <ClCompile Include="Cargoship.cpp" />
+    <ClCompile Include="CollisionSphere.cpp" />
     <ClCompile Include="Ennemi.cpp" />
     <ClCompile Include="Fabrique.cpp" />
     <ClCompile Include="Fighter.cpp" />
@@ -108,6 +109,8 @@
     <ClInclude Include="BaseProjectile.h" />
     <ClInclude Include="Cargoship.h" />
     <ClInclude Include="Collisions.h" />
+    <ClInclude Include="CollisionSphere.h" />
+    <ClInclude Include="deque.h" />
     <ClInclude Include="Ennemi.h" />
     <ClInclude Include="Fabrique.h" />
     <ClInclude Include="Fighter.h" />
@@ -115,6 +118,7 @@
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectiles.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StealthFighter.h" />
     <ClInclude Include="Testeur.h" />

@@ -17,5 +17,6 @@ private:
 	const float speed = 10;
 	TypeProjectile currentWeapon;
 	Clock fireRate;
+	bool leftShot;
 };
 
