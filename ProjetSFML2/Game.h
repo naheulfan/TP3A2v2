@@ -21,6 +21,10 @@ private:
 
 	bool init();
 	void getInputs();
+	void backgroundUpdate();
+	void playerUpdate();
+	void enemiesUpdate();
+	void projectileUpdate();
 	void update();
 	void draw();
 
