@@ -13,10 +13,13 @@ public:
 	Projectiles* Shoot();
 	void SetCurrentWeapon(TypeProjectile newWeapon);
 	bool CanShoot();
+	int GetHealth();
+	void Damage(int damageValue);
 private:
 	const float speed = 10;
 	TypeProjectile currentWeapon;
 	Clock fireRate;
 	bool leftShot;
+	int health;
 };
 

@@ -254,6 +254,12 @@ void Game::enemiesUpdate()
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
 		vecteurEnnemis[i]->Update();
+		if (vecteurEnnemis.at(i)->getGlobalBounds().intersects(player.getGlobalBounds()))
+		{
+			player.Damage(vecteurEnnemis.at(i)->GetHealth());
+			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
+			activeEnemies--;
+		}
 	}
 }
 

@@ -11,6 +11,7 @@ void Player::Init(Texture &playerTexture, Vector2f basePos)
 	setPosition(basePos);
 	currentWeapon = TypeProjectile::base;
 	fireRate.restart();
+	health = 5;
 }
 Player::~Player()
 {
@@ -56,4 +57,12 @@ bool Player::CanShoot()
 		return true;
 	}
 	return false;
+}
+int Player::GetHealth()
+{
+	return health;
+}
+void Player::Damage(int damageValue)
+{
+	health -= damageValue;
 }
