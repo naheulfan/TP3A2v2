@@ -4,6 +4,7 @@ BaseProjectile::BaseProjectile(Vector2f basePosition, bool baseDirection) : Proj
 {
 	projectileType = TypeProjectile::base;
 	speed = 15;
+	damage = 1;
 }
 
 

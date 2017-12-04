@@ -157,19 +157,29 @@ void Game::update()
 	{
 		baseProjectile.setPosition(projectiles.at(i)->getPosition());
 		projectiles.at(i)->Update();
+		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)
+		{
+			projectiles.erase(projectiles.begin() + i);
+		}
 		for (int j = 0; j < vecteurEnnemis.size(); j++)
 		{
 			if (vecteurEnnemis.at(j)->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 			{
 				vecteurEnnemis.at(j)->Damage(projectiles.at(i)->GetDamage());
+				if (projectiles.at(i)->GetProjectileType() != TypeProjectile::piercing)
+				{
+					projectiles.erase(projectiles.begin() + i);
+				}
 				if (vecteurEnnemis.at(j)->GetHealth() <= 0)
 				{
 					vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
+					activeEnemies--;
 				}
 			}
 		}
-		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)
+		if (ennemies[0]->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 		{
+			ennemies[0]->Damage(projectiles.at(i)->GetDamage());
 			projectiles.erase(projectiles.begin() + i);
 		}
 	}
