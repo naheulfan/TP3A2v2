@@ -192,26 +192,26 @@ void Game::projectileUpdate()
 void Game::enemiesUpdate()
 {
 	ennemies[0]->Update();
-	int random = rand() % 100;
-	if (activeEnemies <= 10)
+	randomEnemy = rand() % 100;
+	if (activeEnemies <= 15)
 	{
-		if (spawnRate.getElapsedTime() > seconds(0.90))
+		if (spawnRate.getElapsedTime() > seconds(0.4))
 		{
-			if ((random >= 0 && random < 50))
+			if ((randomEnemy >= 0 && randomEnemy < 50))
 			{
 				spawnNumber = 1;
 			}
-			else if ((random >= 50 && random < 80))
+			else if ((randomEnemy >= 50 && randomEnemy < 80))
 			{
 				spawnNumber = 2;
 			}
 
-			else if ((random >= 80 && random < 90))
+			else if ((randomEnemy >= 80 && randomEnemy < 90))
 			{
 				spawnNumber = 3;
 			}
 
-			else if ((random >= 95 && random < 100))
+			else if ((randomEnemy >= 95 && randomEnemy < 100))
 			{
 				spawnNumber = 4;
 			}
@@ -221,6 +221,8 @@ void Game::enemiesUpdate()
 	}
 	if (spawnNumber > 0)
 	{
+		randomSpawn = rand() % 650;
+		spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), randomSpawn);
 		Fabrique::setPosition(spawner.getPosition());
 		switch (spawnNumber)
 		{

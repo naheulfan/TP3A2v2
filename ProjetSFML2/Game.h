@@ -40,6 +40,9 @@ private:
 	Clock spawnRate;
 	int activeEnemies = 0;
 
+	int randomEnemy;
+	int randomSpawn;
+
 	RenderWindow mainWin;
 	View view;
 	Event event;
