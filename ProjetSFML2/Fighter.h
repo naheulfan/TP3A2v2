@@ -4,7 +4,7 @@
 class Fighter : public Ennemi
 {
 public:
-	Fighter(Vector2f basePos, Texture texture);
+	Fighter(Vector2f basePos, Texture texture, Color color);
 	~Fighter();
 	void Update();
 	void Draw(RenderWindow &window);

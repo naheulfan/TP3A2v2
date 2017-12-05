@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "Collisions.h"
+#include <iostream>
+
 Game::Game()
 {
 	//On place dans le contructeur ce qui permet à la game elle-même de fonctionner
@@ -72,7 +74,7 @@ bool Game::init()
 
 void Game::getInputs()
 {
-	//On passe l'événement en référence et celui-ci est chargé du dernier événement reçu!
+	//On passe l'événement en référence et celui-ci est chargé du dernier événement reçus
 	while (mainWin.pollEvent(event))
 	{
 		//x sur la fenêtre
@@ -177,7 +179,7 @@ void Game::projectileUpdate()
 				if (vecteurEnnemis.at(j)->GetHealth() <= 0)
 				{
 					vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
-					activeEnemies--;
+					--activeEnemies;
 				}
 			}
 		}
@@ -215,28 +217,49 @@ void Game::enemiesUpdate()
 			{
 				spawnNumber = 4;
 			}
-			activeEnemies++;
+			++activeEnemies;
 			spawnRate.restart();
 		}
 	}
+
 	if (spawnNumber > 0)
 	{
 		randomSpawn = rand() % 650;
-		spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x), randomSpawn);
+		randomColor = rand() % 3;
+		if (randomColor == 0)
+		{
+			color.r = 255;
+			color.b = 50;
+			color.g = 50;
+		}
+		else if (randomColor == 1)
+		{
+			color.r = 50;
+			color.b = 255;
+			color.g = 50;
+		}
+		else if (randomColor == 2)
+		{
+			color.r = 50;
+			color.b = 50;
+			color.g = 255;
+		}
+
+		spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x)+100, randomSpawn);
 		Fabrique::setPosition(spawner.getPosition());
 		switch (spawnNumber)
 		{
 		case 1:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(baseEnemy, texturesEnnemis[1]));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(baseEnemy, texturesEnnemis[1], color));
 			break;
 		case 2:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(fighter, texturesEnnemis[2]));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(fighter, texturesEnnemis[2], color));
 			break;
 		case 3:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(stealthFighter, texturesEnnemis[3]));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(stealthFighter, texturesEnnemis[3], color));
 			break;
 		case 4:
-			vecteurEnnemis.push_back(Fabrique::createEnemy(cargoship, texturesEnnemis[4]));
+			vecteurEnnemis.push_back(Fabrique::createEnemy(cargoship, texturesEnnemis[4], color));
 			break;
 		}
 		spawnNumber = 0;
@@ -248,7 +271,7 @@ void Game::enemiesUpdate()
 		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
 		{
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
-			activeEnemies--;
+			--activeEnemies;
 		}
 	}
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
@@ -258,12 +281,13 @@ void Game::enemiesUpdate()
 		{
 			player.Damage(vecteurEnnemis.at(i)->GetHealth());
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
-			activeEnemies--;
+			--activeEnemies;
 		}
 	}
+	std::cout << "Ennemis actifs: " << activeEnemies << std::endl;
 }
 
-#include <iostream>
+
 void Game::update()
 {
 	backgroundUpdate();
@@ -278,15 +302,19 @@ void Game::draw()
 	mainWin.clear();
 	mainWin.draw(background[0]);
 	mainWin.draw(background[1]);
+
 	ennemies[0]->Draw(mainWin);
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
 		vecteurEnnemis[i]->Draw(mainWin);
 	}
+
 	player.Draw(mainWin);
+
 	for (int i = 0; i < projectiles.size(); i++)
 	{
 		projectiles.at(i)->Draw(baseProjectile, mainWin);
 	}
+
 	mainWin.display();
 }

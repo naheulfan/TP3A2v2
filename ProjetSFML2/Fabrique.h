@@ -12,7 +12,7 @@ class Fabrique
 public:
 	static void chargerData(RenderWindow* renderWindow);
 	static void setPosition(const Vector2f& position);
-	static Ennemi* createEnemy(TypeEnnemi enemyType, Texture texture);
+	static Ennemi* createEnemy(TypeEnnemi enemyType, Texture texture, Color enemyColor);
 
 private:
 	Fabrique();

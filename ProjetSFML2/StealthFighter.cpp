@@ -2,7 +2,7 @@
 
 
 
-StealthFighter::StealthFighter(Vector2f basePos, Texture texture) : Ennemi(basePos, texture)
+StealthFighter::StealthFighter(Vector2f basePos, Texture texture, Color color) : Ennemi(basePos, texture, color)
 {
 	speed = 3;
 }

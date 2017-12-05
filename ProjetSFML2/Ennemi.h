@@ -5,7 +5,7 @@ using namespace sf;
 class Ennemi : public Sprite
 {
 public:
-	Ennemi(Vector2f basePos, Texture texture);
+	Ennemi(Vector2f basePos, Texture texture, Color color);
 	~Ennemi();
 	virtual void Update() = 0;
 	virtual void Draw(RenderWindow &window) = 0;
@@ -14,6 +14,7 @@ public:
 	float GetHealth();
 private:
 	Texture texture;
+	Color color;
 	CollisionSphere collisionSphere;
 protected:
 	float health;
