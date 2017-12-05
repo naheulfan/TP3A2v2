@@ -37,11 +37,13 @@ private:
 	int compteurGlobal = 1;
 	//To remove
 
+	Color color;
 	Clock spawnRate;
 	int activeEnemies = 0;
 
 	int randomEnemy;
 	int randomSpawn;
+	int randomColor;
 
 	RenderWindow mainWin;
 	View view;

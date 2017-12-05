@@ -2,9 +2,10 @@
 
 
 
-Ennemi::Ennemi(Vector2f basePos, Texture texture)
+Ennemi::Ennemi(Vector2f basePos, Texture texture, Color color)
 {
 	this->texture = texture;
+	this->setColor(color);
 	this->setTexture(this->texture);
 	this->setPosition(basePos);
 	collisionSphere = CollisionSphere(this->getTextureRect().width / 2, basePos.x, basePos.y);

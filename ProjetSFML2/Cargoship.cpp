@@ -2,7 +2,7 @@
 
 
 
-Cargoship::Cargoship(Vector2f basePos, Texture texture) : Ennemi(basePos, texture)
+Cargoship::Cargoship(Vector2f basePos, Texture texture, Color color) : Ennemi(basePos, texture, color)
 {
 	speed = 1;
 	health = 5;
