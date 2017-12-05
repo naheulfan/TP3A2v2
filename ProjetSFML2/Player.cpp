@@ -12,6 +12,7 @@ void Player::Init(Texture &playerTexture, Vector2f basePos)
 	currentWeapon = TypeProjectile::base;
 	fireRate.restart();
 	health = 5;
+	shields.Push(Shield(this->getPosition()));
 }
 Player::~Player()
 {
@@ -19,6 +20,7 @@ Player::~Player()
 void Player::Draw(RenderWindow &window)
 {
 	window.draw(*this);
+	shields.Top().Draw(window);
 }
 void Player::Move(int command)
 {
