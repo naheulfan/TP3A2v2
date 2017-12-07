@@ -27,7 +27,7 @@ public:
 	{
 		return vector.size();
 	}
-	T Top()
+	T& Top()
 	{
 		return vector.back();
 	}
