@@ -5,6 +5,7 @@
 StealthFighter::StealthFighter(Vector2f basePos, Texture texture, Color color, TypeEnnemi enemyType) : Ennemi(basePos, texture, color, enemyType)
 {
 	speed = 3;
+	health = 3;
 }
 
 StealthFighter::~StealthFighter()
