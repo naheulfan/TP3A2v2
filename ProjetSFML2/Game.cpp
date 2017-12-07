@@ -262,10 +262,14 @@ void Game::enemiesUpdate()
 
 	for (int i = 0; i < vecteurEnnemis.size(); i++)
 	{
-		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width)
+		if (vecteurEnnemis.at(i)->getPosition().x < 0 - vecteurEnnemis.at(i)->getGlobalBounds().width && vecteurEnnemis[i]->getTypeEnnemi() != stealthFighter)
 		{
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
 			--activeEnemies;
+		}
+		if (vecteurEnnemis.at(i)->getPosition().x >= LARGEUR_ECRAN && vecteurEnnemis[i]->getTypeEnnemi() == stealthFighter)
+		{
+			vecteurEnnemis.at(i)->setPosition(0 - vecteurEnnemis.at(i)->getGlobalBounds().width, vecteurEnnemis.at(i)->getPosition().y);
 		}
 	}
 	for (int i = 0; i < vecteurEnnemis.size(); i++)

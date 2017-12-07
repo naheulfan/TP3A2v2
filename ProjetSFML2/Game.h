@@ -30,12 +30,9 @@ private:
 
 	CircleShape spawner;
 	int spawnNumber;
+
 	//Notre vecteur de pointeurs de la super-classe
 	std::vector<Ennemi*> vecteurEnnemis;
-
-	//To remove
-	int compteurGlobal = 1;
-	//To remove
 
 	Color color;
 	Clock spawnRate;

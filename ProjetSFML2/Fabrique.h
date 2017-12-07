@@ -13,7 +13,6 @@ public:
 	static void chargerData(RenderWindow* renderWindow);
 	static void setPosition(const Vector2f& position);
 	static Ennemi* createEnemy(TypeEnnemi enemyType, Texture texture, Color enemyColor);
-
 private:
 	Fabrique();
 	static Vector2f position;

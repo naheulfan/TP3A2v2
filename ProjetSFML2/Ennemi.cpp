@@ -2,12 +2,13 @@
 
 
 
-Ennemi::Ennemi(Vector2f basePos, Texture texture, Color color)
+Ennemi::Ennemi(Vector2f basePos, Texture texture, Color color, TypeEnnemi enemyType)
 {
 	this->texture = texture;
 	this->setColor(color);
 	this->setTexture(this->texture);
 	this->setPosition(basePos);
+	this->enemyType = enemyType;
 	collisionSphere = CollisionSphere(this->getTextureRect().width / 2, basePos.x, basePos.y);
 }
 
@@ -25,6 +26,12 @@ float Ennemi::GetHealth()
 {
 	return health;
 }
+
+TypeEnnemi Ennemi::getTypeEnnemi()
+{
+	return enemyType;
+}
+
 TypeProjectile Ennemi::GetColor()
 {
 	TypeProjectile retval = TypeProjectile::boss;
@@ -42,6 +49,7 @@ TypeProjectile Ennemi::GetColor()
 	}
 	return retval;
 }
+
 
 void Ennemi::Update()
 {

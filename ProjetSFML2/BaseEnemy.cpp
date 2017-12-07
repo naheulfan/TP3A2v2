@@ -2,7 +2,7 @@
 
 
 
-BaseEnemy::BaseEnemy(Vector2f basePos, Texture texture, Color color) : Ennemi(basePos, texture, color)
+BaseEnemy::BaseEnemy(Vector2f basePos, Texture texture, Color color, TypeEnnemi enemyType) : Ennemi(basePos, texture, color, enemyType)
 {
 	speed = 4;
 	health = 1;

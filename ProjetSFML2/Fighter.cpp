@@ -2,7 +2,7 @@
 
 
 
-Fighter::Fighter(Vector2f basePos, Texture texture, Color color) : Ennemi(basePos, texture, color)
+Fighter::Fighter(Vector2f basePos, Texture texture, Color color, TypeEnnemi enemyType) : Ennemi(basePos, texture, color, enemyType)
 {
 	speed = 3;
 }

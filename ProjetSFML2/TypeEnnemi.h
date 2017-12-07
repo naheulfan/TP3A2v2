@@ -5,4 +5,5 @@ enum TypeEnnemi
 	fighter,
 	stealthFighter,
 	cargoship,
+	mothership,
 };

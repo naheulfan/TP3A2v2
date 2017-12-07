@@ -2,7 +2,7 @@
 
 
 
-Mothership::Mothership(Vector2f basePos, Texture texture) : Ennemi(basePos, texture, Color::White)
+Mothership::Mothership(Vector2f basePos, Texture texture) : Ennemi(basePos, texture, Color::White, mothership)
 {
 	health = 5000;
 }
