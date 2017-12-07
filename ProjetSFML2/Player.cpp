@@ -20,7 +20,10 @@ Player::~Player()
 void Player::Draw(RenderWindow &window)
 {
 	window.draw(*this);
-	shields.Top().Draw(window);
+	if (!shields.IsEmpty())
+	{
+		shields.Top().Draw(window);
+	}
 }
 void Player::Move(int command)
 {
@@ -39,6 +42,10 @@ void Player::Move(int command)
 	if (command == 4)
 	{
 		move(-speed, 0);
+	}
+	if (!shields.IsEmpty())
+	{
+		shields.Top().setPosition(this->getPosition());
 	}
 
 }
@@ -64,7 +71,31 @@ int Player::GetHealth()
 {
 	return health;
 }
-void Player::Damage(int damageValue)
+void Player::Damage(int damageValue, TypeProjectile damageColor)
 {
-	health -= damageValue;
+	while (!shields.IsEmpty() && damageValue > 0)
+	{
+		if (shields.Top().GetColor() == damageColor)
+		{
+			damageValue = 0;
+		}
+		else
+		{
+			int shieldRemaining = shields.Top().GetHealth() - damageValue;
+			if (shieldRemaining > 0)
+			{
+				shields.Top().Damage(damageValue);
+				damageValue = 0;
+			}
+			else
+			{
+				damageValue = shieldRemaining * -1; // donc le dommage est égal au dégat "d'overkill" infligés au bouclier;
+				shields.Pop();
+			}
+		}
+	}
+	if (damageValue > 0)
+	{
+		health -= damageValue;
+	}
 }

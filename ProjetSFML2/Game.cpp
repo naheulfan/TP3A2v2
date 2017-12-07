@@ -228,21 +228,15 @@ void Game::enemiesUpdate()
 		randomColor = rand() % 3;
 		if (randomColor == 0)
 		{
-			color.r = 255;
-			color.b = 50;
-			color.g = 50;
+			color = Color::Red;
 		}
 		else if (randomColor == 1)
 		{
-			color.r = 50;
-			color.b = 255;
-			color.g = 50;
+			color = Color::Blue;
 		}
 		else if (randomColor == 2)
 		{
-			color.r = 50;
-			color.b = 50;
-			color.g = 255;
+			color = Color::Green;
 		}
 
 		spawner.setPosition(LARGEUR_ECRAN - (texturesEnnemis[0].getSize().x)+100, randomSpawn);
@@ -279,7 +273,7 @@ void Game::enemiesUpdate()
 		vecteurEnnemis[i]->Update();
 		if (vecteurEnnemis.at(i)->getGlobalBounds().intersects(player.getGlobalBounds()))
 		{
-			player.Damage(vecteurEnnemis.at(i)->GetHealth());
+			player.Damage(vecteurEnnemis.at(i)->GetHealth(),vecteurEnnemis.at(i)->GetColor());
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
 			--activeEnemies;
 		}

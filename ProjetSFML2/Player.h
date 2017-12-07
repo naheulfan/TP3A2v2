@@ -16,7 +16,7 @@ public:
 	void SetCurrentWeapon(TypeProjectile newWeapon);
 	bool CanShoot();
 	int GetHealth();
-	void Damage(int damageValue);
+	void Damage(int damageValue, TypeProjectile damageColor);
 private:
 	PileVector<Shield> shields;
 	const float speed = 10;

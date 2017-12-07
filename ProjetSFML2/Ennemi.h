@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "CollisionSphere.h"
+#include "Projectiles.h"
 using namespace sf;
 class Ennemi : public Sprite
 {
@@ -12,6 +13,7 @@ public:
 	IntRect getIntRect();
 	void Damage(float damageValue);
 	float GetHealth();
+	TypeProjectile GetColor();
 private:
 	Texture texture;
 	Color color;

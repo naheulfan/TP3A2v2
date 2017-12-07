@@ -35,7 +35,7 @@ int Shield::GetHealth()
 }
 void Shield::Damage(int damageValue)
 {
-	health -= damageValue;
+	health = health - damageValue;
 }
 
 Shield::~Shield()
