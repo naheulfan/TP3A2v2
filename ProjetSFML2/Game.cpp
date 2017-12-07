@@ -286,7 +286,6 @@ void Game::enemiesUpdate()
 	std::cout << "Ennemis actifs: " << activeEnemies << std::endl;
 }
 
-
 void Game::update()
 {
 	backgroundUpdate();
