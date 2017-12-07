@@ -13,18 +13,24 @@ Ennemi::Ennemi(Vector2f basePos, Texture texture, Color color)
 
 Ennemi::~Ennemi()
 {
-
 }
 
 IntRect Ennemi::getIntRect()
 {
 	return this->getTextureRect();
 }
+
 void Ennemi::Damage(float damageValue)
 {
 	health -= damageValue;
 }
+
 float Ennemi::GetHealth()
 {
 	return health;
+}
+
+void Ennemi::Update()
+{
+	
 }

@@ -14,6 +14,7 @@ Cargoship::~Cargoship()
 
 void Cargoship::Update()
 {
+	Ennemi::Update();
 	this->move(Vector2f(-speed, 0));
 }
 void Cargoship::Draw(RenderWindow &window)

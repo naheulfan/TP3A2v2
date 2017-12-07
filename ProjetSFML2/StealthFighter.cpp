@@ -13,6 +13,7 @@ StealthFighter::~StealthFighter()
 
 void StealthFighter::Update()
 {
+    Ennemi::Update();
 	this->move(Vector2f(-speed, 0));
 }
 void StealthFighter::Draw(RenderWindow &window)

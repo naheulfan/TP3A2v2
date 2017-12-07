@@ -14,6 +14,7 @@ BaseEnemy::~BaseEnemy()
 
 void BaseEnemy::Update()
 {
+	Ennemi::Update();
 	this->move(Vector2f(-speed, 0));
 }
 void BaseEnemy::Draw(RenderWindow &window)

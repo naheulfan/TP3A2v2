@@ -17,21 +17,18 @@ Ennemi* Fabrique::createEnemy(TypeEnnemi enemyType, Texture texture, Color enemy
 	if (enemyType == baseEnemy)
 	{
 		Ennemi* enemy = new BaseEnemy(Vector2f(position.x, position.y), texture, enemyColor);
-		//enemy->ajustementsVisuels();
 		return enemy;
 	}
 
 	else if (enemyType == fighter)
 	{
 		Ennemi* enemy = new Fighter(Vector2f(position.x, position.y), texture, enemyColor);
-		//enemy->ajustementsVisuels();
 		return enemy;
 	}
 
 	else if (enemyType == stealthFighter)
 	{
 		Ennemi* enemy = new StealthFighter(Vector2f(position.x, position.y), texture, enemyColor);
-		//enemy->ajustementsVisuels();
 		return enemy;
 	}
 

@@ -13,6 +13,7 @@ Fighter::~Fighter()
 
 void Fighter::Update()
 {
+	Ennemi::Update();
 	this->move(Vector2f(-speed, 0));
 }
 void Fighter::Draw(RenderWindow &window)

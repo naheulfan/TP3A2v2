@@ -9,6 +9,7 @@ public:
 	~Ennemi();
 	virtual void Update() = 0;
 	virtual void Draw(RenderWindow &window) = 0;
+	void animation();
 	IntRect getIntRect();
 	void Damage(float damageValue);
 	float GetHealth();
