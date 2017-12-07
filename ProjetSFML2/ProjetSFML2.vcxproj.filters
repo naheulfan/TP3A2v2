@@ -60,6 +60,9 @@
     <ClCompile Include="Fabrique.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -113,10 +116,16 @@
     <ClInclude Include="deque.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-	<ClInclude Include="List.h">
+    <ClInclude Include="List.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="CollisionSphere.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="PileVector.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,6 +137,9 @@
       <Filter>Fichiers de ressources</Filter>
     </Image>
     <Image Include="Ressources\Ennemi1.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\shield.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
   </ItemGroup>

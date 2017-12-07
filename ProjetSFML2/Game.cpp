@@ -274,7 +274,7 @@ void Game::enemiesUpdate()
 
 		if (vecteurEnnemis.at(i)->getGlobalBounds().intersects(player.getGlobalBounds()))
 		{
-			player.Damage(vecteurEnnemis.at(i)->GetHealth());
+			player.Damage(vecteurEnnemis.at(i)->GetHealth(),vecteurEnnemis.at(i)->GetColor());
 			vecteurEnnemis.erase(vecteurEnnemis.begin() + i);
 			--activeEnemies;
 		}

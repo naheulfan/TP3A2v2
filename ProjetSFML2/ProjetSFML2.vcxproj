@@ -101,6 +101,7 @@
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectiles.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="StealthFighter.cpp" />
     <ClCompile Include="Testeur.cpp" />
   </ItemGroup>
@@ -117,10 +118,12 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Mothership.h" />
+    <ClInclude Include="PileVector.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectiles.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="StealthFighter.h" />
     <ClInclude Include="Testeur.h" />
     <ClInclude Include="TypeEnnemi.h" />
@@ -128,6 +131,7 @@
   <ItemGroup>
     <Image Include="Ressources\BaseProjectile.png" />
     <Image Include="Ressources\Ennemi1.png" />
+    <Image Include="Ressources\shield.png" />
     <Image Include="Ressources\starfieldSprite.png" />
   </ItemGroup>
   <ItemGroup>

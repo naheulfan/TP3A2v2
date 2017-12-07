@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "BaseProjectile.h"
+#include "Shield.h"
+#include "PileVector.h"
 using namespace sf;
 class Player : public Sprite
 {
@@ -14,8 +16,9 @@ public:
 	void SetCurrentWeapon(TypeProjectile newWeapon);
 	bool CanShoot();
 	int GetHealth();
-	void Damage(int damageValue);
+	void Damage(int damageValue, TypeProjectile damageColor);
 private:
+	PileVector<Shield> shields;
 	const float speed = 10;
 	TypeProjectile currentWeapon;
 	Clock fireRate;
