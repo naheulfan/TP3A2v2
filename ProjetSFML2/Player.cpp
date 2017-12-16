@@ -12,6 +12,11 @@ void Player::Init(Texture &playerTexture, Vector2f basePos)
 	currentWeapon = TypeProjectile::base;
 	fireRate.restart();
 	health = 5;
+	ammo[0] = -1; //baseshot donc infini
+	for (int i = 1; i < 5; i++)
+	{
+		ammo[i] = 0; //on commence avec 0 balle des armes spéciales
+	}
 	shields.Push(Shield(this->getPosition()));
 }
 Player::~Player()
@@ -52,20 +57,53 @@ void Player::Move(int command)
 
 Projectiles* Player::Shoot()
 {
+	fireRate.restart();
 	if (currentWeapon == TypeProjectile::base)
 	{
-		fireRate.restart();
 		return new BaseProjectile(Vector2f(getPosition().x + getTextureRect().width / 2, getPosition().y + getTextureRect().height / 2), true);
-		
 	}
+	else if (currentWeapon == TypeProjectile::piercing)
+	{
+		return new PiercingShot(Vector2f(getPosition().x + getTextureRect().width / 2, getPosition().y + getTextureRect().height / 2), true);
+	}
+	
 }
 bool Player::CanShoot()
 {
-	if (fireRate.getElapsedTime() > seconds(0.25))
+	bool retval = false;
+	if (currentWeapon == TypeProjectile::base && fireRate.getElapsedTime() > seconds(0.25))
 	{
-		return true;
+		retval = true;
 	}
-	return false;
+	else if (currentWeapon == TypeProjectile::piercing && fireRate.getElapsedTime() > seconds(2))
+	{
+		if (ammo[1] > 0)
+		{
+			retval = true;
+		}
+	}
+	else if (currentWeapon == TypeProjectile::empowered && fireRate.getElapsedTime() > seconds(0.25))
+	{
+		if (ammo[2] > 0)
+		{
+			retval = true;
+		}
+	}
+	else if (currentWeapon == TypeProjectile::explosive && fireRate.getElapsedTime() > seconds(1))
+	{
+		if (ammo[3] > 0)
+		{
+			retval = true;
+		}
+	}
+	else if (currentWeapon == TypeProjectile::emp && fireRate.getElapsedTime() > seconds(0.125))
+	{
+		if (ammo[4] > 0)
+		{
+			retval = true;
+		}
+	}
+	return retval;
 }
 int Player::GetHealth()
 {
@@ -94,5 +132,32 @@ void Player::Damage(int damageValue, TypeProjectile damageColor)
 	if (damageValue > 0)
 	{
 		health -= damageValue;
+	}
+}
+void Player::AddShield()
+{
+	shields.Push(Shield(this->getPosition()));
+}
+void Player::SetCurrentWeapon(TypeProjectile newProjectile)
+{
+	this->currentWeapon = newProjectile;
+}
+void Player::AddAmmo(TypeProjectile typeOfAmmo)
+{
+	if (typeOfAmmo == TypeProjectile::piercing)
+	{
+		ammo[1] += 3;
+	}
+	else if (typeOfAmmo == TypeProjectile::empowered)
+	{
+		ammo[2] += 20;
+	}
+	else if (typeOfAmmo == TypeProjectile::explosive)
+	{
+		ammo[3] += 10;
+	}
+	else if (typeOfAmmo == TypeProjectile::emp)
+	{
+		ammo[4] += 50;
 	}
 }

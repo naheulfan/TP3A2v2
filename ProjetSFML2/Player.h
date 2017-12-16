@@ -3,6 +3,7 @@
 #include "BaseProjectile.h"
 #include "Shield.h"
 #include "PileVector.h"
+#include "PiercingShot.h"
 using namespace sf;
 class Player : public Sprite
 {
@@ -17,6 +18,8 @@ public:
 	bool CanShoot();
 	int GetHealth();
 	void Damage(int damageValue, TypeProjectile damageColor);
+	void AddShield();
+	void AddAmmo(TypeProjectile typeOfAmmo);
 private:
 	PileVector<Shield> shields;
 	const float speed = 10;
@@ -24,5 +27,6 @@ private:
 	Clock fireRate;
 	bool leftShot;
 	int health;
+	int ammo[5];
 };
 

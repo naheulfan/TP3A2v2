@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="BaseProjectile.cpp" />
+    <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Cargoship.cpp" />
     <ClCompile Include="CollisionSphere.cpp" />
     <ClCompile Include="Ennemi.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="Observed.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PiercingShot.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectiles.cpp" />
     <ClCompile Include="Shield.cpp" />
@@ -111,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="BaseProjectile.h" />
+    <ClInclude Include="Bonus.h" />
     <ClInclude Include="Cargoship.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="CollisionSphere.h" />
@@ -124,6 +127,7 @@
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="Observed.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="PiercingShot.h" />
     <ClInclude Include="PileVector.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectiles.h" />
@@ -136,8 +140,16 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ressources\BaseProjectile.png" />
+    <Image Include="Ressources\Bomb.png" />
+    <Image Include="Ressources\BombBonus.png" />
+    <Image Include="Ressources\EmpBomb.png" />
+    <Image Include="Ressources\EmpBonus.png" />
+    <Image Include="Ressources\EmpoweredBonus.png" />
+    <Image Include="Ressources\EmpProjectile.png" />
     <Image Include="Ressources\Ennemi1.png" />
+    <Image Include="Ressources\PiercingBonus.png" />
     <Image Include="Ressources\shield.png" />
+    <Image Include="Ressources\ShieldBonus.png" />
     <Image Include="Ressources\starfieldSprite.png" />
   </ItemGroup>
   <ItemGroup>

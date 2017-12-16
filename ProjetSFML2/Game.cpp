@@ -69,6 +69,39 @@ bool Game::init()
 
 	baseProjectileT.loadFromFile("Ressources\\BaseProjectile.png");
 	baseProjectile.setTexture(baseProjectileT);
+	if (!bonusesT[0].loadFromFile("Ressources\\PiercingBonus.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[1].loadFromFile("Ressources\\EmpoweredBonus.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[2].loadFromFile("Ressources\\BombBonus.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[3].loadFromFile("Ressources\\EmpBonus.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[4].loadFromFile("Ressources\\Bomb.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[5].loadFromFile("Ressources\\EmpBomb.png"))
+	{
+		return false;
+	}
+	if (!bonusesT[6].loadFromFile("Ressources\\ShieldBonus.png"))
+	{
+		return false;
+	}
+	BonusType bonusTypes[7]{ BonusType::piercingBonus, BonusType::empoweredBonus, BonusType::explosiveShot, BonusType::empShot, BonusType::bomb, BonusType::empBomb, BonusType::shield };
+	for (int i = 0; i < 7; i++)
+	{
+		bonuses[i] = new Bonus(Vector2f(0, 0), bonusesT[i], bonusTypes[i]);
+	}
 	return true;
 }
 
@@ -100,21 +133,25 @@ void Game::getInputs()
 		{
 			if (event.key.code == sf::Keyboard::Num1)
 			{
-				spawnNumber = 1;
+				player.SetCurrentWeapon(TypeProjectile::base);
 			}
 			else if (event.key.code == sf::Keyboard::Num2)
 			{
-				spawnNumber = 2;
+				player.SetCurrentWeapon(TypeProjectile::piercing);
 			}
 
 			else if (event.key.code == sf::Keyboard::Num3)
 			{
-				spawnNumber = 3;
+				player.SetCurrentWeapon(TypeProjectile::base);
 			}
 
 			else if (event.key.code == sf::Keyboard::Num4)
 			{
-				spawnNumber = 4;
+				player.SetCurrentWeapon(TypeProjectile::base);
+			}
+			else if (event.key.code == sf::Keyboard::Num5)
+			{
+				player.SetCurrentWeapon(TypeProjectile::base);
 			}
 		}
 	}
@@ -155,10 +192,26 @@ void Game::playerUpdate()
 	if (haut) player.Move(1);
 	if (bas) player.Move(2);
 	if (space && player.CanShoot()) projectiles.push_back(player.Shoot());
+	for (int i = 0; i < 7; i++)
+	{
+		if (bonuses[i]->IsActive() && player.getGlobalBounds().intersects(bonuses[i]->getGlobalBounds()))
+		{
+			bonuses[i]->Deactivate();
+			if (bonuses[i]->GetBonusType() == BonusType::shield)
+			{
+				player.AddShield();
+			}
+			else if (bonuses[i]->GetBonusType() == BonusType::piercingBonus)
+			{
+				player.AddAmmo(TypeProjectile::piercing);
+			}
+		}
+	}
 }
 
 void Game::projectileUpdate()
 {
+	PileVector<int> indexOfProjectilesToDelete;
 	for (int i = 0; i < projectiles.size(); i++)
 	{
 		baseProjectile.setPosition(projectiles.at(i)->getPosition());
@@ -166,7 +219,7 @@ void Game::projectileUpdate()
 		projectiles.at(i)->Update();
 		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)
 		{
-			projectiles.erase(projectiles.begin() + i);
+			indexOfProjectilesToDelete.Push(i);
 		}
 		if (projectiles.at(i)->IsPlayerProjectile())
 		{
@@ -177,10 +230,18 @@ void Game::projectileUpdate()
 					vecteurEnnemis.at(j)->Damage(projectiles.at(i)->GetDamage());
 					if (projectiles.at(i)->GetProjectileType() != TypeProjectile::piercing)
 					{
-						projectiles.erase(projectiles.begin() + i);
+						indexOfProjectilesToDelete.Push(i);
 					}
 					if (vecteurEnnemis.at(j)->GetHealth() <= 0)
 					{
+						int bonusDrop = rand() % 100;
+						if (bonusDrop <= 6)
+						{
+							if (!bonuses[bonusDrop]->IsActive())
+							{
+								bonuses[bonusDrop]->Activate(vecteurEnnemis.at(j)->getPosition());
+							}
+						}
 						vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
 						--activeEnemies;
 					}
@@ -192,14 +253,19 @@ void Game::projectileUpdate()
 			if (player.getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 			{
 				player.Damage(projectiles.at(i)->GetDamage(), projectiles.at(i)->GetProjectileType());
-				projectiles.erase(projectiles.begin() + i);
+				indexOfProjectilesToDelete.Push(i);
 			}
 		}
-		if (ennemies[0]->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
-		{
-			ennemies[0]->Damage(projectiles.at(i)->GetDamage());
-			projectiles.erase(projectiles.begin() + i);
-		}
+			if (ennemies[0]->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
+			{
+				ennemies[0]->Damage(projectiles.at(i)->GetDamage());
+				indexOfProjectilesToDelete.Push(i);
+			}
+	}
+	while (!indexOfProjectilesToDelete.IsEmpty())
+	{
+		projectiles.erase(projectiles.begin() + indexOfProjectilesToDelete.Top());
+		indexOfProjectilesToDelete.Pop();
 	}
 }
 
@@ -350,6 +416,13 @@ void Game::draw()
 			baseProjectile.setColor(Color::White);
 		}
 		projectiles.at(i)->Draw(baseProjectile, mainWin);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		if (bonuses[i]->IsActive())
+		{
+			mainWin.draw(*bonuses[i]);
+		}
 	}
 
 	mainWin.display();

@@ -72,6 +72,12 @@
     <ClCompile Include="Observed.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="PiercingShot.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -146,6 +152,12 @@
     <ClInclude Include="Observed.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="PiercingShot.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Ressources\starfieldSprite.png">
@@ -158,6 +170,30 @@
       <Filter>Fichiers de ressources</Filter>
     </Image>
     <Image Include="Ressources\shield.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\PiercingBonus.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\EmpoweredBonus.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\EmpBonus.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\EmpBomb.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\BombBonus.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\Bomb.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\EmpProjectile.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Ressources\ShieldBonus.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
   </ItemGroup>

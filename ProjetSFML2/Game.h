@@ -7,6 +7,8 @@
 #include "BaseEnemy.h"
 #include "BaseProjectile.h"
 #include "EnnemiProjectile.h"
+#include "PileVector.h"
+#include "Bonus.h"
 
 using namespace sf;
 
@@ -61,4 +63,7 @@ private:
 	std::vector<Projectiles*> projectiles;
 	Sprite baseProjectile;
 	Texture baseProjectileT;
+	Texture bonusesT[7];
+	Bonus* bonuses[7];
+
 };
