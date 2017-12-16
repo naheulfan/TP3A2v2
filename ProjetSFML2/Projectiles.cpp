@@ -24,3 +24,12 @@ float Projectiles::GetDamage()
 {
 	return damage;
 }
+bool Projectiles::IsPlayerProjectile()
+{
+	bool retval = true;
+	if (projectileType == TypeProjectile::boss || projectileType == TypeProjectile::green || projectileType == TypeProjectile::red || projectileType == TypeProjectile::blue)
+	{
+		retval = false;
+	}
+	return retval;
+}

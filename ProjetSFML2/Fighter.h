@@ -1,5 +1,6 @@
 #pragma once
 #include "Ennemi.h"
+#include "EnnemiProjectile.h"
 
 class Fighter : public Ennemi
 {
@@ -8,6 +9,9 @@ public:
 	~Fighter();
 	void Update();
 	void Draw(RenderWindow &window);
+	EnnemiProjectile* Shoot();
+	bool CanShoot();
 private:
 	float speed;
+	Clock shootClock;
 };

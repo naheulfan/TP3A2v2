@@ -162,25 +162,37 @@ void Game::projectileUpdate()
 	for (int i = 0; i < projectiles.size(); i++)
 	{
 		baseProjectile.setPosition(projectiles.at(i)->getPosition());
+		
 		projectiles.at(i)->Update();
 		if (projectiles.at(i)->getPosition().x > LARGEUR_ECRAN)
 		{
 			projectiles.erase(projectiles.begin() + i);
 		}
-		for (int j = 0; j < vecteurEnnemis.size(); j++)
+		if (projectiles.at(i)->IsPlayerProjectile())
 		{
-			if (vecteurEnnemis.at(j)->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
+			for (int j = 0; j < vecteurEnnemis.size(); j++)
 			{
-				vecteurEnnemis.at(j)->Damage(projectiles.at(i)->GetDamage());
-				if (projectiles.at(i)->GetProjectileType() != TypeProjectile::piercing)
+				if (vecteurEnnemis.at(j)->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
 				{
-					projectiles.erase(projectiles.begin() + i);
+					vecteurEnnemis.at(j)->Damage(projectiles.at(i)->GetDamage());
+					if (projectiles.at(i)->GetProjectileType() != TypeProjectile::piercing)
+					{
+						projectiles.erase(projectiles.begin() + i);
+					}
+					if (vecteurEnnemis.at(j)->GetHealth() <= 0)
+					{
+						vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
+						--activeEnemies;
+					}
 				}
-				if (vecteurEnnemis.at(j)->GetHealth() <= 0)
-				{
-					vecteurEnnemis.erase(vecteurEnnemis.begin() + j);
-					--activeEnemies;
-				}
+			}
+		}
+		else if (!projectiles.at(i)->IsPlayerProjectile())
+		{
+			if (player.getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
+			{
+				player.Damage(projectiles.at(i)->GetDamage(), projectiles.at(i)->GetProjectileType());
+				projectiles.erase(projectiles.begin() + i);
 			}
 		}
 		if (ennemies[0]->getGlobalBounds().intersects(baseProjectile.getGlobalBounds()))
@@ -283,6 +295,16 @@ void Game::enemiesUpdate()
 			--activeEnemies;
 		}
 	}
+	for (int i = 0; i < vecteurEnnemis.size(); i++)
+	{
+		if (vecteurEnnemis.at(i)->getTypeEnnemi() == TypeEnnemi::fighter || vecteurEnnemis.at(i)->getTypeEnnemi() == TypeEnnemi::stealthFighter)
+		{
+			if (vecteurEnnemis.at(i)->CanShoot())
+			{
+				projectiles.push_back(vecteurEnnemis.at(i)->Shoot());
+			}
+		}
+	}
 	std::cout << "Ennemis actifs: " << activeEnemies << std::endl;
 }
 
@@ -311,6 +333,22 @@ void Game::draw()
 
 	for (int i = 0; i < projectiles.size(); i++)
 	{
+		if (projectiles.at(i)->GetProjectileType() == TypeProjectile::blue)
+		{
+			baseProjectile.setColor(Color::Blue);
+		}
+		else if (projectiles.at(i)->GetProjectileType() == TypeProjectile::green)
+		{
+			baseProjectile.setColor(Color::Green);
+		}
+		else if (projectiles.at(i)->GetProjectileType() == TypeProjectile::red)
+		{
+			baseProjectile.setColor(Color::Red);
+		}
+		else
+		{
+			baseProjectile.setColor(Color::White);
+		}
 		projectiles.at(i)->Draw(baseProjectile, mainWin);
 	}
 

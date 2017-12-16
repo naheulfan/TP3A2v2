@@ -55,3 +55,19 @@ void Ennemi::Update()
 {
 
 }
+EnnemiProjectile* Ennemi::Shoot()
+{
+	return new EnnemiProjectile(this->getPosition(), false, this->GetColor());
+}
+bool Ennemi::CanShoot()
+{
+	if (shootClock.getElapsedTime() >= seconds(2))
+	{
+		shootClock.restart();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BaseEnemy.h"
 #include "BaseProjectile.h"
+#include "EnnemiProjectile.h"
 
 using namespace sf;
 

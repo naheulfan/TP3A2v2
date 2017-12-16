@@ -3,6 +3,7 @@
 #include "CollisionSphere.h"
 #include "Projectiles.h"
 #include "TypeEnnemi.h"
+#include "EnnemiProjectile.h"
 
 using namespace sf;
 class Ennemi : public Sprite
@@ -16,6 +17,8 @@ public:
 	float GetHealth();
 	TypeProjectile GetColor();
 	TypeEnnemi getTypeEnnemi();
+	virtual EnnemiProjectile* Shoot();
+	bool CanShoot();
 private:
 	Texture texture;
 	Color color;
@@ -23,5 +26,6 @@ private:
 	TypeEnnemi enemyType;
 protected:
 	float health;
+	Clock shootClock;
 };
 

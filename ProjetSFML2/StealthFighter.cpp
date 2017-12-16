@@ -6,6 +6,7 @@ StealthFighter::StealthFighter(Vector2f basePos, Texture texture, Color color, T
 {
 	speed = 3;
 	health = 3;
+	shootClock.restart();
 }
 
 StealthFighter::~StealthFighter()
@@ -20,4 +21,9 @@ void StealthFighter::Update()
 void StealthFighter::Draw(RenderWindow &window)
 {
 	window.draw(*this);
+}
+EnnemiProjectile* StealthFighter::Shoot()
+{
+	shootClock.restart();
+	return new EnnemiProjectile(this->getPosition(), true, this->GetColor());
 }

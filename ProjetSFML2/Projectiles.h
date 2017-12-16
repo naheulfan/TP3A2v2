@@ -27,6 +27,7 @@ public:
 	void Draw(Sprite &sprite, RenderWindow &window);
 	float GetDamage();
 	TypeProjectile GetProjectileType();
+	bool IsPlayerProjectile();
 protected:
 	bool direction; //true = right, false = left
 	TypeProjectile projectileType;
