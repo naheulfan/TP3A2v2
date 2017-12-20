@@ -102,6 +102,15 @@ bool Game::init()
 	{
 		bonuses[i] = new Bonus(Vector2f(0, 0), bonusesT[i], bonusTypes[i]);
 	}
+	font.loadFromFile("Ressources\\Peric.ttf");
+	weaponText.setFont(font);
+	weaponText.setPosition(10, 10);
+	weaponText.setColor(Color::White);
+	weaponText.setString("Arme Actuelle: Base");
+	ammoText.setFont(font);
+	ammoText.setPosition(10, 30);
+	ammoText.setColor(Color::White);
+	ammoText.setString("ammo: inf");
 	return true;
 }
 
@@ -134,20 +143,24 @@ void Game::getInputs()
 			if (event.key.code == sf::Keyboard::Num1)
 			{
 				player.SetCurrentWeapon(TypeProjectile::base);
+				weaponText.setString("Arme Actuelle: Base");
 			}
 			else if (event.key.code == sf::Keyboard::Num2)
 			{
 				player.SetCurrentWeapon(TypeProjectile::piercing);
+				weaponText.setString("Arme Actuelle: Percante");
 			}
 
 			else if (event.key.code == sf::Keyboard::Num3)
 			{
-				player.SetCurrentWeapon(TypeProjectile::base);
+				player.SetCurrentWeapon(TypeProjectile::empowered);
+				weaponText.setString("Arme Actuelle: Empowered");
 			}
 
 			else if (event.key.code == sf::Keyboard::Num4)
 			{
 				player.SetCurrentWeapon(TypeProjectile::base);
+				weaponText.setString("Arme Actuelle: Base");
 			}
 			else if (event.key.code == sf::Keyboard::Num5)
 			{
@@ -204,6 +217,10 @@ void Game::playerUpdate()
 			else if (bonuses[i]->GetBonusType() == BonusType::piercingBonus)
 			{
 				player.AddAmmo(TypeProjectile::piercing);
+			}
+			else if (bonuses[i]->GetBonusType() == BonusType::empoweredBonus)
+			{
+				player.AddAmmo(TypeProjectile::empowered);
 			}
 		}
 	}
@@ -424,6 +441,16 @@ void Game::draw()
 			mainWin.draw(*bonuses[i]);
 		}
 	}
+	mainWin.draw(weaponText);
+	if (player.GetAmmo() == -1)
+	{
+		ammoText.setString("ammo: inf");
+	}
+	else
+	{
+		ammoText.setString("ammo: " + std::to_string(player.GetAmmo()));
+	}
+	mainWin.draw(ammoText);
 
 	mainWin.display();
 }

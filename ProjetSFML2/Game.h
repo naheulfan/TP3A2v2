@@ -65,5 +65,10 @@ private:
 	Texture baseProjectileT;
 	Texture bonusesT[7];
 	Bonus* bonuses[7];
+	Text weaponText;
+	Text ammoText;
+	Text lifeText;
+	Text score;
+	Font font;
 
 };

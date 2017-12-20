@@ -4,6 +4,7 @@
 #include "Shield.h"
 #include "PileVector.h"
 #include "PiercingShot.h"
+#include "EmpoweredShot.h"
 using namespace sf;
 class Player : public Sprite
 {
@@ -20,6 +21,7 @@ public:
 	void Damage(int damageValue, TypeProjectile damageColor);
 	void AddShield();
 	void AddAmmo(TypeProjectile typeOfAmmo);
+	int GetAmmo();
 private:
 	PileVector<Shield> shields;
 	const float speed = 10;

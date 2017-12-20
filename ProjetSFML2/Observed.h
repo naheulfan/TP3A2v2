@@ -8,7 +8,7 @@ public:
 	~Observed();
 	void NotifyAllObservers();
 private:
-	std::vector<Observer*> observers;
+///	std::vector<Observer*> observers;
 
 };
 

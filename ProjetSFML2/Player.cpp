@@ -12,7 +12,7 @@ void Player::Init(Texture &playerTexture, Vector2f basePos)
 	currentWeapon = TypeProjectile::base;
 	fireRate.restart();
 	health = 5;
-	ammo[0] = -1; //baseshot donc infini
+	ammo[0] = -1; //baseshot non géré
 	for (int i = 1; i < 5; i++)
 	{
 		ammo[i] = 0; //on commence avec 0 balle des armes spéciales
@@ -64,7 +64,13 @@ Projectiles* Player::Shoot()
 	}
 	else if (currentWeapon == TypeProjectile::piercing)
 	{
+		ammo[1]--;
 		return new PiercingShot(Vector2f(getPosition().x + getTextureRect().width / 2, getPosition().y + getTextureRect().height / 2), true);
+	}
+	else if (currentWeapon == TypeProjectile::empowered)
+	{
+		ammo[2]--;
+		return new EmpoweredShot(Vector2f(getPosition().x + getTextureRect().width / 2, getPosition().y + getTextureRect().height / 2), true);
 	}
 	
 }
@@ -159,5 +165,28 @@ void Player::AddAmmo(TypeProjectile typeOfAmmo)
 	else if (typeOfAmmo == TypeProjectile::emp)
 	{
 		ammo[4] += 50;
+	}
+}
+int Player::GetAmmo()
+{
+	if (currentWeapon == TypeProjectile::base)
+	{
+		return -1;
+	}
+	else if (currentWeapon == TypeProjectile::piercing)
+	{
+		return ammo[1];
+	}
+	else if (currentWeapon == TypeProjectile::empowered)
+	{
+		return ammo[2];
+	}
+	else if (currentWeapon == TypeProjectile::explosive)
+	{
+		return ammo[3];
+	}
+	else if (currentWeapon == TypeProjectile::emp)
+	{
+		return ammo[4];
 	}
 }

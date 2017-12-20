@@ -94,6 +94,7 @@
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Cargoship.cpp" />
     <ClCompile Include="CollisionSphere.cpp" />
+    <ClCompile Include="EmpoweredShot.cpp" />
     <ClCompile Include="Ennemi.cpp" />
     <ClCompile Include="EnnemiProjectile.cpp" />
     <ClCompile Include="Fabrique.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="CollisionSphere.h" />
     <ClInclude Include="deque.h" />
+    <ClInclude Include="EmpoweredShot.h" />
     <ClInclude Include="Ennemi.h" />
     <ClInclude Include="EnnemiProjectile.h" />
     <ClInclude Include="Fabrique.h" />
@@ -154,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProjetSFML2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Ressources\Peric.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
