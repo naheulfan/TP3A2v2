@@ -9,6 +9,7 @@
 #include "EnnemiProjectile.h"
 #include "PileVector.h"
 #include "Bonus.h"
+#include "Hud.h"
 
 using namespace sf;
 
@@ -65,10 +66,7 @@ private:
 	Texture baseProjectileT;
 	Texture bonusesT[7];
 	Bonus* bonuses[7];
-	Text weaponText;
-	Text ammoText;
-	Text lifeText;
-	Text score;
+	Hud hud;
 	Font font;
 
 };

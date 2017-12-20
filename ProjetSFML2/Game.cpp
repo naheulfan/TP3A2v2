@@ -103,14 +103,7 @@ bool Game::init()
 		bonuses[i] = new Bonus(Vector2f(0, 0), bonusesT[i], bonusTypes[i]);
 	}
 	font.loadFromFile("Ressources\\Peric.ttf");
-	weaponText.setFont(font);
-	weaponText.setPosition(10, 10);
-	weaponText.setColor(Color::White);
-	weaponText.setString("Arme Actuelle: Base");
-	ammoText.setFont(font);
-	ammoText.setPosition(10, 30);
-	ammoText.setColor(Color::White);
-	ammoText.setString("ammo: inf");
+	hud.Init(&font);
 	return true;
 }
 
@@ -143,28 +136,30 @@ void Game::getInputs()
 			if (event.key.code == sf::Keyboard::Num1)
 			{
 				player.SetCurrentWeapon(TypeProjectile::base);
-				weaponText.setString("Arme Actuelle: Base");
+				hud.SetWeaponText("Arme Actuelle: Base");
 			}
 			else if (event.key.code == sf::Keyboard::Num2)
 			{
 				player.SetCurrentWeapon(TypeProjectile::piercing);
-				weaponText.setString("Arme Actuelle: Percante");
+				hud.SetWeaponText("Arme Actuelle: Percante");
 			}
 
 			else if (event.key.code == sf::Keyboard::Num3)
 			{
 				player.SetCurrentWeapon(TypeProjectile::empowered);
-				weaponText.setString("Arme Actuelle: Empowered");
+				hud.SetWeaponText("Arme Actuelle: Empowered");
 			}
 
 			else if (event.key.code == sf::Keyboard::Num4)
 			{
 				player.SetCurrentWeapon(TypeProjectile::base);
-				weaponText.setString("Arme Actuelle: Base");
+				hud.SetWeaponText("Arme Actuelle: Base");
 			}
 			else if (event.key.code == sf::Keyboard::Num5)
 			{
 				player.SetCurrentWeapon(TypeProjectile::base);
+				hud.SetWeaponText("Arme Actuelle: Base");
+
 			}
 		}
 	}
@@ -441,16 +436,15 @@ void Game::draw()
 			mainWin.draw(*bonuses[i]);
 		}
 	}
-	mainWin.draw(weaponText);
 	if (player.GetAmmo() == -1)
 	{
-		ammoText.setString("ammo: inf");
+		hud.SetAmmoText("ammo: inf");
 	}
 	else
 	{
-		ammoText.setString("ammo: " + std::to_string(player.GetAmmo()));
+		hud.SetAmmoText("ammo: " + std::to_string(player.GetAmmo()));
 	}
-	mainWin.draw(ammoText);
-
+	hud.SetLifeText("vie: " + std::to_string(player.GetHealth()));
+	hud.Draw(mainWin);
 	mainWin.display();
 }

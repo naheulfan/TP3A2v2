@@ -1,12 +1,11 @@
-#include "Observer.h"
-
-
-
-Observer::Observer()
-{
-}
-
-
-Observer::~Observer()
-{
-}
+//#include "Observer.h"
+//
+//
+//
+//Observer::Observer()
+//{
+//}
+//
+//Observer::~Observer()
+//{
+//}
